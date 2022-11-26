@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:jemputah_app/constants/color.dart';
-import 'package:jemputah_app/constants/icons.dart';
-import 'package:jemputah_app/constants/image.dart';
-import 'package:jemputah_app/screens/penjemputan_screen.dart';
-import 'package:jemputah_app/screens/transaksi_screen.dart';
+import 'package:jemputah_app_driver/constants/color.dart';
+import 'package:jemputah_app_driver/constants/icons.dart';
+import 'package:jemputah_app_driver/constants/image.dart';
+import 'package:jemputah_app_driver/screens/penjemputan_screen.dart';
+import 'package:jemputah_app_driver/screens/transaksi_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

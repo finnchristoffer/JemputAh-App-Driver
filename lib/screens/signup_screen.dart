@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jemputah_app/constants/color.dart';
-import 'package:jemputah_app/constants/image.dart';
+import 'package:jemputah_app_driver/constants/color.dart';
+import 'package:jemputah_app_driver/constants/image.dart';
 import './login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
