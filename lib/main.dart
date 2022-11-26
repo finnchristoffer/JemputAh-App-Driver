@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jemputah_app_driver/screens/base_screen.dart';
-//import 'screens/splash_screen.dart';
+import 'package:jemputah_app/screens/base_screen.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,9 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'JemputAh App Driver',
-      home: const BaseScreen(),
-      //const SplashScreen(),
+      title: 'JemputAh App',
+      home: const SplashScreen(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: 'Poppins',
