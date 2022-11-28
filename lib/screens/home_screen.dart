@@ -5,7 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
 import 'package:jemputah_app_driver/constants/image.dart';
-import 'package:jemputah_app_driver/screens/penjemputan_screen.dart';
+import 'package:jemputah_app_driver/screens/detail_penjemputan_screen.dart';
 import 'package:jemputah_app_driver/screens/transaksi_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -168,16 +168,7 @@ class _JemputBox extends StatelessWidget {
                   right: 28,
                 ),
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) {
-                          return const PenjemputanScreen();
-                        },
-                      ),
-                    );
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.buttonBackground,
                     minimumSize: const Size(110, 35),
@@ -317,106 +308,118 @@ class _JadwalJemput extends StatelessWidget {
             textAlign: TextAlign.left,
           ),
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 17,
-          ),
-          height: 250,
-          child: ListView.separated(
-            itemCount: penjemputan.length,
-            itemBuilder: (BuildContext context, int index) {
-              return SizedBox(
-                height: 113,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 5,
-                  ),
-                  color: AppColors.jadwalCardBackground,
-                  child: ListTile(
-                    visualDensity: const VisualDensity(
-                      horizontal: -4,
-                      vertical: 4,
+        GestureDetector(
+          onTap: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) {
+                  return const DetailPenjemputanScreen();
+                },
+              ),
+            ),
+          },
+          child: Container(
+            margin: const EdgeInsets.symmetric(
+              horizontal: 17,
+            ),
+            height: 250,
+            child: ListView.separated(
+              itemCount: penjemputan.length,
+              itemBuilder: (BuildContext context, int index) {
+                return SizedBox(
+                  height: 113,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                    title: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 2,
-                        bottom: 5,
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 5,
+                    ),
+                    color: AppColors.jadwalCardBackground,
+                    child: ListTile(
+                      visualDensity: const VisualDensity(
+                        horizontal: -4,
+                        vertical: 4,
                       ),
-                      child: Text(
-                        penjemputan[index]["tgl"] as String,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                      title: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 2,
+                          bottom: 5,
+                        ),
+                        child: Text(
+                          penjemputan[index]["tgl"] as String,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
-                    ),
-                    subtitle: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 5,
+                      subtitle: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 5,
+                            ),
+                            child: Text(
+                              penjemputan[index]["nama"] as String,
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
                           ),
-                          child: Text(
-                            penjemputan[index]["nama"] as String,
+                          Text(
+                            penjemputan[index]["alamat"] as String,
                             textAlign: TextAlign.left,
                             style: const TextStyle(
                               fontSize: 14,
                             ),
                           ),
-                        ),
-                        Text(
-                          penjemputan[index]["alamat"] as String,
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                    leading: Column(
-                      children: [
-                        Image.asset(
-                          iconJadwal,
-                          width: 50,
-                          height: 50,
-                          fit: BoxFit.fill,
-                        ),
-                        Text(
-                          penjemputan[index]["jam"] as String,
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                    trailing: const Padding(
-                      padding: EdgeInsets.only(
-                        left: 5,
-                        top: 5,
+                        ],
                       ),
-                      child: Icon(
-                        Icons.navigate_next,
-                        size: 60,
+                      leading: Column(
+                        children: [
+                          Image.asset(
+                            iconJadwal,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.fill,
+                          ),
+                          Text(
+                            penjemputan[index]["jam"] as String,
+                            textAlign: TextAlign.left,
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                       ),
+                      trailing: const Padding(
+                        padding: EdgeInsets.only(
+                          left: 5,
+                          top: 5,
+                        ),
+                        child: Icon(
+                          Icons.navigate_next,
+                          size: 60,
+                        ),
+                      ),
+                      minLeadingWidth: 64,
+                      dense: true,
+                      horizontalTitleGap: 8.5,
+                      onTap: null,
                     ),
-                    minLeadingWidth: 64,
-                    dense: true,
-                    horizontalTitleGap: 8.5,
-                    onTap: null,
                   ),
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) => Divider(
-              thickness: 1,
-              height: 10,
-              color: AppColors.backgroundGreen,
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) => Divider(
+                thickness: 1,
+                height: 10,
+                color: AppColors.backgroundGreen,
+              ),
             ),
           ),
         ),
