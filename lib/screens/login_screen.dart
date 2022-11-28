@@ -111,7 +111,7 @@ class InitState extends State<LoginScreen> {
             ),
             GestureDetector(
               onTap: () => {
-                Navigator.push(context,
+                Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => const BaseScreen()))
               },
               child: Container(

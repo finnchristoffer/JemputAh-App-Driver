@@ -109,6 +109,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.mainGreen,
         title: const Text('Profil Driver'),
+        centerTitle: false,
       ),
       body: ListView(
         children: [
