@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/screens/base_screen.dart';
+import 'package:jemputah_app_driver/screens/tukar_screen.dart';
 import 'screens/splash_screen.dart';
+import 'package:jemputah_app_driver/screens/tukar_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +17,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'JemputAh App',
-      home: const SplashScreen(),
+      // home: const SplashScreen(),
+      home: Tukar(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: 'Poppins',

@@ -1,9 +1,7 @@
-import 'dart:io';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
-import 'package:jemputah_app_driver/constants/images.dart';
-import 'package:jemputah_app_driver/constants/icons.dart';
 
 void main() => runApp(const Tukar());
 
@@ -18,160 +16,153 @@ class Tukar extends StatelessWidget {
   }
 }
 
-class TukarPage extends StatelessWidget {
-  TukarPage({super.key});
+class TukarPage extends StatefulWidget {
+  const TukarPage({super.key});
 
-  final titles = [
-    "Google Play",
-    "Telkomsel",
-    "Disney+",
-    "XL",
-    "Youtube Premium",
-    "Netflix",
-    "Spotify",
-    "Tri"
-  ];
+  @override
+  _TukarPageState createState() => _TukarPageState();
+}
 
-  final images = [
-    googlePlay,
-    telkomsel,
-    disney,
-    xl,
-    youtube,
-    netflix,
-    spotify,
-    tri
-  ];
-  final subtitles = [
-    "Anda akan mendapatkan Redeem Code Google Play sebesar Rp. 10.000",
-    "Anda akan mendapatkan Redeem Code Google Play sebesar Rp. 10.000",
-    "Anda akan mendapatkan Redeem Code Google Play sebesar Rp. 10.000",
-    "Anda akan mendapatkan Redeem Code Google Play sebesar Rp. 10.000",
-    "Anda akan mendapatkan Redeem Code Google Play sebesar Rp. 10.000",
-    "Anda akan mendapatkan Redeem Code Google Play sebesar Rp. 10.000",
-    "Anda akan mendapatkan Redeem Code Google Play sebesar Rp. 10.000",
-    "Anda akan mendapatkan Redeem Code Google Play sebesar Rp. 10.000",
-  ];
-
-  final points = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000];
-
+class _TukarPageState extends State<TukarPage> {
   @override
   Widget build(BuildContext context) {
     //variable contain int number point
-    int point = 1500;
+    var price;
+    int point = 1000;
+
+    void _calculateMoney(val) {
+      setState(() {
+        price = val;
+        print(price);
+      });
+    }
+
+    TextEditingController valuePoint = TextEditingController();
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColors.mainGreen,
-          title: const Text('Tukar Page'),
-          centerTitle: false,
-        ),
-        body: Column(
-          children: [
-            Row(
+      appBar: AppBar(
+        backgroundColor: AppColors.mainGreen,
+        title: const Text('Tukar Koin'),
+        centerTitle: false,
+      ),
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 40, left: 45),
+                child: Text(
+                  "Total Poin",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Spacer(),
+              Container(
+                margin: EdgeInsets.only(top: 40, right: 60),
+                child: Text(
+                  point.toString() + "   Koin",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 25, left: 30, right: 30),
+            decoration: BoxDecoration(
+              color: AppColors.secondaryBorder,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 40, left: 45),
+                  margin: EdgeInsets.only(top: 40),
                   child: Text(
-                    "Total Poin",
+                    "Masukan jumlah koin \nyang ingin anda tukar",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                Spacer(),
-                Container(
-                  margin: EdgeInsets.only(top: 40, right: 60),
-                  child: Text(
-                    point.toString() + "   Koin",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 80, left: 45),
+                      child: Text(
+                        "Koin",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Spacer(),
+                    Container(
+                      margin: EdgeInsets.only(top: 80, right: 55),
+                      width: 150,
+                      // child: Text(
+                      //   point.toString(),
+                      //   style: TextStyle(
+                      //       color: Colors.black,
+                      //       fontSize: 20,
+                      //       fontWeight: FontWeight.bold),
+                      // ),
+                      child: TextField(
+                        // controller: valuePoint,
+                        onChanged: (val) {
+                          _calculateMoney(val);
+                        },
+                        decoration: new InputDecoration.collapsed(
+                            hintText: 'Jumlah Koin'),
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 25),
+                  child: Container(
+                    height: 2.0,
+                    width: 290.0,
+                    color: Colors.black,
                   ),
+                ),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 25, left: 50, bottom: 65),
+                      child: Text(
+                        "Rp.",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Spacer(),
+                    Container(
+                      margin: EdgeInsets.only(top: 25, right: 50, bottom: 65),
+                      child: Text(
+                        '$price',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            Expanded(
-              child: GridView.builder(
-                shrinkWrap: true,
-                padding: const EdgeInsets.only(right: 15, left: 15, bottom: 50),
-                itemCount: titles.length,
-                //change gridview background color
-
-                itemBuilder: (ctx, i) {
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      side: BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        //make border
-                      ),
-                      margin: EdgeInsets.all(5),
-                      padding: EdgeInsets.all(5),
-                      child: Stack(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            // mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Image.asset(
-                                  images[i],
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(bottom: 5, top: 5),
-                                child: Text(
-                                  titles[i],
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: Text(
-                                  subtitles[i],
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                points[i].toString() + " Koin",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1.0,
-                  crossAxisSpacing: 0.0,
-                  mainAxisSpacing: 5,
-                  mainAxisExtent: 280,
-                ),
-              ),
-            ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }
