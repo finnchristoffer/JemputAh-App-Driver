@@ -5,7 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
 import 'package:jemputah_app_driver/constants/image.dart';
-import 'package:jemputah_app_driver/screens/penjemputan_screen.dart';
+import 'package:jemputah_app_driver/screens/detail_penjemputan_screen.dart';
 import 'package:jemputah_app_driver/screens/transaksi_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -168,16 +168,7 @@ class _JemputBox extends StatelessWidget {
                   right: 28,
                 ),
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) {
-                          return const PenjemputanScreen();
-                        },
-                      ),
-                    );
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.buttonBackground,
                     minimumSize: const Size(110, 35),
@@ -408,7 +399,16 @@ class _JadwalJemput extends StatelessWidget {
                     minLeadingWidth: 64,
                     dense: true,
                     horizontalTitleGap: 8.5,
-                    onTap: null,
+                    onTap: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) {
+                            return const DetailPenjemputanScreen();
+                          },
+                        ),
+                      ),
+                    },
                   ),
                 ),
               );
