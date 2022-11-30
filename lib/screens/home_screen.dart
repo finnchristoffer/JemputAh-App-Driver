@@ -5,6 +5,7 @@ import 'package:jemputah_app_driver/constants/icons.dart';
 import 'package:jemputah_app_driver/constants/image.dart';
 import 'package:jemputah_app_driver/screens/detail_penjemputan_screen.dart';
 import 'package:jemputah_app_driver/screens/transaksi_screen.dart';
+import 'package:jemputah_app_driver/screens/tukar_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -166,7 +167,13 @@ class _JemputBox extends StatelessWidget {
                   right: 28,
                 ),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return TukarScreen();
+                      },
+                    ));
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.buttonBackground,
                     minimumSize: const Size(110, 35),

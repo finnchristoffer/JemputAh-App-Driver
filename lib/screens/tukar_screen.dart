@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/screens/home_screen.dart';
 
-void main() => runApp(const TukarPage());
+void main() => runApp(const TukarScreen());
 
-class TukarPage extends StatefulWidget {
-  const TukarPage({super.key});
+class TukarScreen extends StatefulWidget {
+  const TukarScreen({super.key});
 
   @override
-  _TukarPageState createState() => _TukarPageState();
+  _TukarScreenState createState() => _TukarScreenState();
 }
 
 int price = 0;
 int point = 1000;
 
-class _TukarPageState extends State<TukarPage> {
+class _TukarScreenState extends State<TukarScreen> {
   @override
   Widget build(BuildContext context) {
     void _calculateMoney(val) {
