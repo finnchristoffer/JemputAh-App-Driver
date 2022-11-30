@@ -1,11 +1,9 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
 import 'package:jemputah_app_driver/constants/image.dart';
-import 'package:jemputah_app_driver/screens/penjemputan_screen.dart';
+import 'package:jemputah_app_driver/screens/detail_penjemputan_screen.dart';
 import 'package:jemputah_app_driver/screens/transaksi_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -61,10 +59,10 @@ class _LeadAppBar extends StatelessWidget {
 }
 
 class _JemputBox extends StatelessWidget {
-  int berat = 10;
-  int jmlJemput = 5;
-  int koin = 1500;
-  String username = "Adit Dudung";
+  final int berat = 10;
+  final int jmlJemput = 5;
+  final int koin = 1500;
+  final String username = "Adit Dudung";
 
   @override
   Widget build(BuildContext context) {
@@ -77,12 +75,12 @@ class _JemputBox extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         border: Border.all(
-          color: Color.fromRGBO(178, 186, 159, 1),
+          color: const Color.fromRGBO(178, 186, 159, 1),
         ),
         borderRadius: const BorderRadius.all(
           Radius.circular(20),
         ),
-        color: Color.fromRGBO(178, 186, 159, 1),
+        color: const Color.fromRGBO(178, 186, 159, 1),
       ),
       child: Column(
         children: [
@@ -98,10 +96,10 @@ class _JemputBox extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
+                SizedBox(
                   width: 200,
                   child: Text(
-                    "$username",
+                    username,
                     style: TextStyle(
                       color: AppColors.black,
                       fontSize: 21,
@@ -168,16 +166,7 @@ class _JemputBox extends StatelessWidget {
                   right: 28,
                 ),
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) {
-                          return const PenjemputanScreen();
-                        },
-                      ),
-                    );
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.buttonBackground,
                     minimumSize: const Size(110, 35),
@@ -264,9 +253,9 @@ class _CarouselState extends State<_Carousel> {
 }
 
 class CarouselView extends StatelessWidget {
-  String path;
+  final String path;
 
-  CarouselView(this.path, {super.key});
+  const CarouselView(this.path, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -295,7 +284,7 @@ class _JadwalJemput extends StatelessWidget {
     },
     {
       "tgl": "Sabtu, 24 September 2022",
-      "jam": "08:00 - 10:00",
+      "jam": "08:00-10:00",
       "nama": "Briana Tamon",
       "alamat": "Jalan Lengkong Kecil No. 47",
     }
@@ -336,13 +325,16 @@ class _JadwalJemput extends StatelessWidget {
                   ),
                   color: AppColors.jadwalCardBackground,
                   child: ListTile(
+                    contentPadding: const EdgeInsets.only(
+                      left: 10,
+                    ),
                     visualDensity: const VisualDensity(
-                      horizontal: -4,
+                      horizontal: 0,
                       vertical: 4,
                     ),
                     title: Padding(
                       padding: const EdgeInsets.only(
-                        top: 2,
+                        top: 15,
                         bottom: 5,
                       ),
                       child: Text(
@@ -378,37 +370,49 @@ class _JadwalJemput extends StatelessWidget {
                         ),
                       ],
                     ),
-                    leading: Column(
-                      children: [
-                        Image.asset(
-                          iconJadwal,
-                          width: 50,
-                          height: 50,
-                          fit: BoxFit.fill,
-                        ),
-                        Text(
-                          penjemputan[index]["jam"] as String,
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            fontSize: 12,
+                    leading: SizedBox(
+                      width: 71,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image.asset(
+                            iconJadwal,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.fill,
                           ),
-                        ),
-                      ],
-                    ),
-                    trailing: const Padding(
-                      padding: EdgeInsets.only(
-                        left: 5,
-                        top: 5,
+                          const Spacer(),
+                          Text(
+                            penjemputan[index]["jam"] as String,
+                            textAlign: TextAlign.left,
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                       ),
+                    ),
+                    trailing: const SizedBox(
+                      width: 55,
                       child: Icon(
                         Icons.navigate_next,
                         size: 60,
                       ),
                     ),
-                    minLeadingWidth: 64,
                     dense: true,
-                    horizontalTitleGap: 8.5,
-                    onTap: null,
+                    horizontalTitleGap: 13,
+                    onTap: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) {
+                            return const DetailPenjemputanScreen();
+                          },
+                        ),
+                      ),
+                    },
                   ),
                 ),
               );
