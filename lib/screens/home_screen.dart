@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
-import 'package:jemputah_app_driver/constants/image.dart';
+import 'package:jemputah_app_driver/constants/images.dart';
 import 'package:jemputah_app_driver/screens/detail_penjemputan_screen.dart';
 import 'package:jemputah_app_driver/screens/transaksi_screen.dart';
 import 'package:jemputah_app_driver/screens/tukar_screen.dart';
@@ -294,8 +294,25 @@ class _JadwalJemput extends StatelessWidget {
       "jam": "08:00-10:00",
       "nama": "Briana Tamon",
       "alamat": "Jalan Lengkong Kecil No. 47",
+    },
+    {
+      "tgl": "Minggu, 25 September 2022",
+      "jam": "10:00-12:00",
+      "nama": "Briana Tamon",
+      "alamat": "Jalan Lengkong Kecil No. 47",
+    },
+    {
+      "tgl": "Minggu, 26 September 2022",
+      "jam": "10:00-12:00",
+      "nama": "Briana Tamon",
+      "alamat": "Jalan Lengkong Kecil No. 47",
     }
   ];
+
+  double setHeight(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 2;
+    return height;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -317,8 +334,11 @@ class _JadwalJemput extends StatelessWidget {
           margin: const EdgeInsets.symmetric(
             horizontal: 17,
           ),
-          height: 250,
+          height: MediaQuery.of(context).size.height -
+              75 -
+              130 * (6 - penjemputan.length),
           child: ListView.separated(
+            physics: NeverScrollableScrollPhysics(),
             itemCount: penjemputan.length,
             itemBuilder: (BuildContext context, int index) {
               return SizedBox(
