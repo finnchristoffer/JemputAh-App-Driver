@@ -7,7 +7,9 @@ import 'package:jemputah_app_driver/constants/images.dart';
 import 'package:jemputah_app_driver/screens/change_password_screen.dart';
 import 'package:jemputah_app_driver/screens/contact_us_screen.dart';
 import 'package:jemputah_app_driver/screens/edit_profile_screen.dart';
+import 'package:jemputah_app_driver/screens/login_screen.dart';
 import 'package:jemputah_app_driver/screens/transaksi_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfilScreen extends StatefulWidget {
   const ProfilScreen({Key? key}) : super(key: key);
@@ -20,8 +22,9 @@ class _ProfileCard extends StatelessWidget {
   final String name;
   final Widget icon;
   final ontap;
+  final bool isLogOut;
 
-  const _ProfileCard(this.name, this.icon, this.ontap);
+  const _ProfileCard(this.name, this.icon, this.ontap, this.isLogOut);
 
   @override
   Widget build(BuildContext context) {
@@ -71,12 +74,20 @@ class _ProfileCard extends StatelessWidget {
             color: AppColors.black,
           ),
         ),
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext ctx) => ontap,
-          ),
-        ),
+        onTap: isLogOut
+            ? () {
+                FirebaseAuth.instance.signOut().then((value) {
+                  print("Signed Out");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                });
+              }
+            : () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext ctx) => ontap,
+                  ),
+                ),
       ),
     );
   }
@@ -203,23 +214,23 @@ class _ProfilScreenState extends State<ProfilScreen> {
             ),
           ),
           _ProfileCard(
-            "Kontak Kami",
-            Image.asset(
-              iconTelpon,
-              width: 30,
-              height: 30,
-            ),
-            const ContactUsPage(),
-          ),
+              "Kontak Kami",
+              Image.asset(
+                iconTelpon,
+                width: 30,
+                height: 30,
+              ),
+              const ContactUsPage(),
+              false),
           _ProfileCard(
-            "Ubah Password",
-            Icon(
-              Icons.lock,
-              size: 30,
-              color: AppColors.black,
-            ),
-            const ChangePasswordPage(),
-          ),
+              "Ubah Password",
+              Icon(
+                Icons.lock,
+                size: 30,
+                color: AppColors.black,
+              ),
+              const ChangePasswordPage(),
+              false),
           _ProfileCard(
             "Keluar",
             Icon(
@@ -227,7 +238,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
               size: 30,
               color: AppColors.black,
             ),
-            null,
+            const LoginScreen(),
+            true,
           ),
         ],
       ),
