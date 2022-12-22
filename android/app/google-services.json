@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "207546045956",
+    "firebase_url": "https://jemputah-database-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "jemputah-database",
+    "storage_bucket": "jemputah-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207546045956:android:9b33df994c09b389d00751",
+        "android_client_info": {
+          "package_name": "com.example.jemputah_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "207546045956-cu0no32grqj0doaiuivutkkbsd0mk3ld.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbXczYKaZuSxRfRCWK34YU5op5so0BNDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "207546045956-cu0no32grqj0doaiuivutkkbsd0mk3ld.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "207546045956-3mcuit2mb5ncm16397aoa37n2gjaf9ub.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.jemputahAppDriver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207546045956:android:757d117f5ff3b740d00751",
+        "android_client_info": {
+          "package_name": "com.example.jemputah_app_driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "207546045956-cu0no32grqj0doaiuivutkkbsd0mk3ld.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbXczYKaZuSxRfRCWK34YU5op5so0BNDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "207546045956-cu0no32grqj0doaiuivutkkbsd0mk3ld.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "207546045956-3mcuit2mb5ncm16397aoa37n2gjaf9ub.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.jemputahAppDriver"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
