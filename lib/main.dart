@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'JemputAh App',
+      title: 'JemputAh Driver App',
       home: const SplashScreen(),
       theme: ThemeData(
         primarySwatch: Colors.blue,

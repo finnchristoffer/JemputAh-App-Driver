@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
-import 'package:jemputah_app_driver/constants/image.dart';
+import 'package:jemputah_app_driver/constants/images.dart';
 import 'package:jemputah_app_driver/screens/change_password_screen.dart';
 import 'package:jemputah_app_driver/screens/contact_us_screen.dart';
 import 'package:jemputah_app_driver/screens/edit_profile_screen.dart';
