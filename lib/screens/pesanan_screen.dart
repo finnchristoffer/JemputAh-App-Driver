@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
+import 'package:jemputah_app_driver/constants/variable.dart';
+import 'package:jemputah_app_driver/extensions/time_code_converter.dart';
 
-class Pesanan extends StatelessWidget {
+import '../API/FetchDataJemput.dart';
+
+class Pesanan extends StatefulWidget {
   const Pesanan({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: PesananPage(),
-    );
-  }
+  PesananPage createState() => PesananPage();
 }
 
-class PesananPage extends StatelessWidget {
-  PesananPage({super.key});
+class PesananPage extends State<Pesanan> {
+  List<Map<String, dynamic>> data = [];
 
-  final titles = ["Pesanan Selesai", "Pesanan Selesai", "Pesananan Selesai"];
-  final subtitles = [
-    "10:00 | 23 Sept 2022",
-    "11:00 | 23 Sept 2022",
-    "12:00 | 23 Sept 2022"
-  ];
+  void initState() {
+    super.initState();
+    setPesanan();
+  }
+
+  void setPesanan() {
+    var penjemputan = FetchDataJemput().fetchListJemputDone(uid);
+    penjemputan.then((value) {
+      setState(() {
+        data = value;
+      });
+    });
+  }
+  
+  TimeCodeConverterHour timeCodeConverterHour = TimeCodeConverterHour();
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +43,18 @@ class PesananPage extends StatelessWidget {
           centerTitle: false,
         ),
         body: ListView.builder(
-            itemCount: titles.length,
+            itemCount: data.length,
             itemBuilder: (context, index) {
               return Card(
                   color: AppColors.backgroundGreen,
                   child: ListTile(
                     //set title with style bold
-                    title: Text(titles[index],
+                    title: Text('Pesanan Selesai',
                         style: const TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(subtitles[index]),
+                    subtitle: Text(timeCodeConverterHour
+                            .timeCodeConverterHour(data[index]['time_code']) +
+                        " | " +
+                        data[index]['date']),
                     leading: Image.asset(
                       iconPesananSelesai,
                       width: 50,
