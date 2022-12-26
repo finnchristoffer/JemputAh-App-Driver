@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
@@ -10,6 +9,8 @@ import 'package:jemputah_app_driver/screens/edit_profile_screen.dart';
 import 'package:jemputah_app_driver/screens/login_screen.dart';
 import 'package:jemputah_app_driver/screens/transaksi_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:jemputah_app_driver/API/FetchData.dart';
+import 'package:jemputah_app_driver/constants/variable.dart';
 
 class ProfilScreen extends StatefulWidget {
   const ProfilScreen({Key? key}) : super(key: key);
@@ -100,17 +101,31 @@ class GetScreen {
 }
 
 class _ProfilScreenState extends State<ProfilScreen> {
-  var username = "Adit Dudung";
-  var phoneNum = "+628123456789";
-  var email = "aditdudung88@gmail.com";
+  var username = "Loading..";
+  var phoneNum = "Loading..";
+  var email = "Loading..";
 
-  void getAddressList() {
-    Navigator.push(
-      context,
-      MaterialPageRoute<void>(
-        builder: (BuildContext ctx) => TransaksiScreen(),
-      ),
-    );
+  void set() {
+    var user = FetchData().fetchMapData("driver", uid);
+    user.then((value) {
+      setState(() {
+        username = value["name_driver"];
+        phoneNum = value["phone_num_driver"];
+        email = value["email_driver"];
+      });
+    });
+  }
+
+  onGoBack(dynamic value) {
+    setState(() {
+      set();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    set();
   }
 
   @override
@@ -118,6 +133,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
     return Scaffold(
       backgroundColor: AppColors.backgroundGreen,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: AppColors.mainGreen,
         title: const Text('Profil Driver'),
         centerTitle: false,
@@ -200,14 +216,9 @@ class _ProfilScreenState extends State<ProfilScreen> {
                     color: AppColors.black,
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext ctx) {
-                          return const EditProfilePage();
-                        },
-                      ),
-                    );
+                    Route route = MaterialPageRoute(
+                        builder: (context) => EditProfilePage());
+                    Navigator.push(context, route).then(onGoBack);
                   },
                 ),
               ),
