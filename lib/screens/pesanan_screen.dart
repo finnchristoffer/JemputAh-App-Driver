@@ -3,7 +3,6 @@ import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
 import 'package:jemputah_app_driver/constants/variable.dart';
 import 'package:jemputah_app_driver/extensions/time_code_converter.dart';
-
 import '../API/FetchDataJemput.dart';
 
 class Pesanan extends StatefulWidget {
@@ -29,7 +28,7 @@ class PesananPage extends State<Pesanan> {
       });
     });
   }
-  
+
   TimeCodeConverterHour timeCodeConverterHour = TimeCodeConverterHour();
 
   @override
@@ -37,7 +36,7 @@ class PesananPage extends State<Pesanan> {
     return Scaffold(
         backgroundColor: AppColors.backgroundGreen,
         appBar: AppBar(
-          //make background color black
+          automaticallyImplyLeading: false,
           backgroundColor: AppColors.mainGreen,
           title: const Text('Pesanan'),
           centerTitle: false,
