@@ -1,27 +1,86 @@
 import 'package:flutter/material.dart';
+import 'package:jemputah_app_driver/API/FetchData.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
+import 'package:jemputah_app_driver/extensions/time_code_converter.dart';
 
 class DetailPenjemputanScreen extends StatefulWidget {
-  const DetailPenjemputanScreen({super.key});
+  final String id_jemput;
+
+  const DetailPenjemputanScreen(this.id_jemput, {super.key});
 
   @override
-  State<StatefulWidget> createState() => InitState();
+  State<StatefulWidget> createState() => InitState(id_jemput);
 }
 
 class InitState extends State<DetailPenjemputanScreen> {
-  double _beratSampahPlastik = 2.5;
-  double _beratSampahKarton = 5.0;
-  double _beratSampahKaca = 0.0;
-  double _beratSampahKaleng = 1.0;
+  String id_jemput;
 
-  double _totalPendapatan = 10000;
-  double _totalBerat = 8.5;
+  InitState(this.id_jemput);
 
-  String _alamatPenjemputan = 'Jalan Lengkong Besar No.47';
-  String _waktuPenjemputan = '07:00 - 08.00';
-  String _namaUser = 'Adit Dudung';
-  String _noTelpUser = '+6281237788';
+  dynamic _beratSampahPlastik = 0.0;
+  dynamic _beratSampahKarton = 0.0;
+  dynamic _beratSampahKaca = 0.0;
+  dynamic _beratSampahKaleng = 0.0;
+
+  dynamic _totalPendapatan = 0;
+  dynamic _totalBerat = 0.0;
+
+  String _alamatPenjemputan = 'Loading...';
+  String _tanggalPenjemputan = 'Loading...';
+  String _waktuPenjemputan = 'Loading...';
+  String _namaUser = 'Loading...';
+  String _noTelpUser = 'Loading...';
+  String _idSampah = '';
+  String _idUser = '';
+
+  TimeCodeConverter timeCodeConverter = TimeCodeConverter();
+
+  void setJemput() {
+    var jemput = FetchData().fetchMapData('jemput', id_jemput);
+    jemput.then((value) {
+      setState(() {
+        _totalPendapatan = value['total_koin_user'];
+        _totalBerat = value['total_berat'];
+        _idSampah = value['id_sampah'];
+        _alamatPenjemputan = value['address'];
+        _tanggalPenjemputan = value['date'];
+        _idUser = value['id_user'];
+        _waktuPenjemputan =
+            timeCodeConverter.timeCodeConverter(value['time_code']);
+        setSampah();
+        setUser();
+      });
+    });
+  }
+
+  void setSampah() {
+    var sampah = FetchData().fetchMapData('sampah', _idSampah);
+    sampah.then((value) {
+      setState(() {
+        _beratSampahPlastik = value['berat1'].toDouble();
+        _beratSampahKarton = value['berat2'].toDouble();
+        _beratSampahKaca = value['berat3'].toDouble();
+        _beratSampahKaleng = value['berat4'].toDouble();
+      });
+    });
+  }
+
+  void setUser() {
+    var user = FetchData().fetchMapData('user', _idUser);
+    user.then((value) {
+      setState(() {
+        _namaUser = value['name_user'];
+        _noTelpUser = value['phone_num_user'];
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    setJemput();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -325,7 +384,7 @@ class InitState extends State<DetailPenjemputanScreen> {
                 SizedBox(
                     width: 260,
                     child: Text(
-                      '$_alamatPenjemputan',
+                      _tanggalPenjemputan,
                       style: TextStyle(
                           fontWeight: FontWeight.normal, fontSize: 15),
                     )),
