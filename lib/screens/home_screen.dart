@@ -7,7 +7,6 @@ import 'package:jemputah_app_driver/constants/icons.dart';
 import 'package:jemputah_app_driver/constants/images.dart';
 import 'package:jemputah_app_driver/constants/variable.dart';
 import 'package:jemputah_app_driver/extensions/time_code_converter.dart';
-import 'package:jemputah_app_driver/models/users.dart';
 import 'package:jemputah_app_driver/screens/detail_penjemputan_screen.dart';
 import 'package:jemputah_app_driver/screens/transaksi_screen.dart';
 import 'package:jemputah_app_driver/screens/tukar_screen.dart';
@@ -306,7 +305,7 @@ class _JadwalJemput extends StatelessWidget {
 
   Widget listJemput(BuildContext context) {
     if (penjemputan.isEmpty || usersName.isEmpty) {
-      return Center(
+      return const Center(
         child: Text("Belum ada Penjemputan"),
       );
     } else {
@@ -468,7 +467,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List usersName = [];
 
   void setJemput() {
-    var penjemputan = FetchDataJemput().fetchListJemputNotDone("dummy_driver");
+    var penjemputan = FetchDataJemput().fetchListJemputNotDone(uid);
     penjemputan.then((value) {
       setState(() {
         data = value;
