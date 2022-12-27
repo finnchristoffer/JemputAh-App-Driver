@@ -305,8 +305,11 @@ class _JadwalJemput extends StatelessWidget {
 
   Widget listJemput(BuildContext context) {
     if (penjemputan.isEmpty || usersName.isEmpty) {
-      return const Center(
-        child: Text("Belum ada Penjemputan"),
+      return SizedBox(
+        height: MediaQuery.of(context).size.height / 3.5,
+        child: const Center(
+          child: Text("Belum ada Penjemputan"),
+        ),
       );
     } else {
       return Container(
