@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/images.dart';
+import 'package:jemputah_app_driver/reuseable_widget/reuseable_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:jemputah_app_driver/API/FetchData.dart';
+import '../constants/variable.dart';
 
 class SettingUI extends StatelessWidget {
   const SettingUI({super.key});
@@ -23,6 +27,28 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  var db = FirebaseFirestore.instance;
+  TextEditingController _nameTextController = TextEditingController();
+  TextEditingController _emailTextController = TextEditingController();
+  TextEditingController _phoneNumberTextController = TextEditingController();
+
+  void setProfile() {
+    var profile = FetchData().fetchMapData('driver', uid);
+    profile.then((value) {
+      setState(() {
+        _nameTextController.text = value['name_driver'];
+        _emailTextController.text = value['email_driver'];
+        _phoneNumberTextController.text = value['phone_num_driver'];
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    setProfile();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,95 +102,83 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ],
             )),
             Container(
-              margin: const EdgeInsets.only(top: 50),
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.grey),
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                      offset: Offset(0, 10),
-                      blurRadius: 50,
-                      color: Color(0xffEEEEEE)),
-                ],
-              ),
-              alignment: Alignment.center,
-              child: TextField(
-                cursorColor: AppColors.buttonBackground,
-                decoration: InputDecoration(
-                  icon: Icon(
-                    Icons.person,
-                    color: AppColors.mainGreen,
-                  ),
-                  hintText: 'Nama Lengkap',
-                  hintStyle: TextStyle(color: AppColors.hintTextColor),
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
+                margin: const EdgeInsets.only(top: 50),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.grey),
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                        offset: Offset(0, 10),
+                        blurRadius: 50,
+                        color: Color(0xffEEEEEE)),
+                  ],
                 ),
-              ),
-            ),
+                alignment: Alignment.center,
+                child: reusableTextField(
+                    "Nama Lengkap", Icons.person, false, _nameTextController)),
             Container(
-              margin: const EdgeInsets.only(top: 20),
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.grey),
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                      offset: Offset(0, 10),
-                      blurRadius: 50,
-                      color: Color(0xffEEEEEE)),
-                ],
-              ),
-              alignment: Alignment.center,
-              child: TextField(
-                cursorColor: AppColors.buttonBackground,
-                decoration: InputDecoration(
-                  icon: Icon(
-                    Icons.email,
-                    color: AppColors.mainGreen,
-                  ),
-                  hintText: 'Email',
-                  hintStyle: TextStyle(color: AppColors.hintTextColor),
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
+                margin: const EdgeInsets.only(top: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.grey),
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                        offset: Offset(0, 10),
+                        blurRadius: 50,
+                        color: Color(0xffEEEEEE)),
+                  ],
                 ),
-              ),
-            ),
+                alignment: Alignment.center,
+                child: reusableTextField(
+                    "Email", Icons.email, false, _emailTextController)),
             Container(
-              margin: const EdgeInsets.only(top: 20),
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.grey),
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                      offset: Offset(0, 10),
-                      blurRadius: 50,
-                      color: Color(0xffEEEEEE)),
-                ],
-              ),
-              alignment: Alignment.center,
-              child: TextField(
-                cursorColor: AppColors.buttonBackground,
-                decoration: InputDecoration(
-                  icon: Icon(
-                    Icons.phone,
-                    color: AppColors.mainGreen,
-                  ),
-                  hintText: 'Nomor Ponsel',
-                  hintStyle: TextStyle(color: AppColors.hintTextColor),
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
+                margin: const EdgeInsets.only(top: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.grey),
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                        offset: Offset(0, 10),
+                        blurRadius: 50,
+                        color: Color(0xffEEEEEE)),
+                  ],
                 ),
-              ),
-            ),
+                alignment: Alignment.center,
+                child: reusableTextField("Nomor Ponsel", Icons.phone, false,
+                    _phoneNumberTextController)),
             GestureDetector(
-              onTap: () => {
-                /* onClick code nanti disini */
+              onTap: () {
+                final nameText = _nameTextController.value.text;
+                final email = _emailTextController.value.text;
+                final phoneNum = _phoneNumberTextController.value.text;
+                if (nameText.isEmpty || email.isEmpty || phoneNum.isEmpty) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const AlertDialog(
+                          title: Text(
+                            "Error",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          content: Text(
+                            "Tolong isi kolom yang masih kosong terlebih dahulu.",
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      });
+                } else {
+                  final driver = <String, dynamic>{
+                    "name_driver": _nameTextController.text,
+                    "email_driver": _emailTextController.text,
+                    "phone_num_driver": _phoneNumberTextController.text,
+                  };
+                  db.collection("driver").doc(uid).update(driver);
+                  Navigator.pop(context);
+                }
               },
               child: Container(
                 margin: const EdgeInsets.only(top: 140),

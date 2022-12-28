@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:jemputah_app_driver/API/FetchData.dart';
+import 'package:jemputah_app_driver/API/FetchDataJemput.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
 import 'package:jemputah_app_driver/constants/images.dart';
+import 'package:jemputah_app_driver/constants/variable.dart';
+import 'package:jemputah_app_driver/extensions/time_code_converter.dart';
 import 'package:jemputah_app_driver/screens/detail_penjemputan_screen.dart';
 import 'package:jemputah_app_driver/screens/transaksi_screen.dart';
 import 'package:jemputah_app_driver/screens/tukar_screen.dart';
@@ -60,10 +64,17 @@ class _LeadAppBar extends StatelessWidget {
 }
 
 class _JemputBox extends StatelessWidget {
-  final int berat = 10;
-  final int jmlJemput = 5;
-  final int koin = 1500;
-  final String username = "Adit Dudung";
+  final int berat;
+  final int jmlJemput;
+  final int koin;
+  final String username;
+
+  _JemputBox(
+    this.username,
+    this.koin,
+    this.jmlJemput,
+    this.berat,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -282,36 +293,149 @@ class CarouselView extends StatelessWidget {
 }
 
 class _JadwalJemput extends StatelessWidget {
-  final penjemputan = [
-    {
-      "tgl": "Jumat, 23 September 2022",
-      "jam": "08:00 - 10:00",
-      "nama": "Bambang Triadi",
-      "alamat": "Jalan Lengkong Besar No. 47",
-    },
-    {
-      "tgl": "Sabtu, 24 September 2022",
-      "jam": "08:00-10:00",
-      "nama": "Briana Tamon",
-      "alamat": "Jalan Lengkong Kecil No. 47",
-    },
-    {
-      "tgl": "Minggu, 25 September 2022",
-      "jam": "10:00-12:00",
-      "nama": "Briana Tamon",
-      "alamat": "Jalan Lengkong Kecil No. 47",
-    },
-    {
-      "tgl": "Minggu, 26 September 2022",
-      "jam": "10:00-12:00",
-      "nama": "Briana Tamon",
-      "alamat": "Jalan Lengkong Kecil No. 47",
-    }
-  ];
+  List<Map<String, dynamic>> penjemputan;
+  List usersName;
 
-  double setHeight(BuildContext context) {
-    double height = MediaQuery.of(context).size.height / 2;
-    return height;
+  _JadwalJemput(
+    this.penjemputan,
+    this.usersName,
+  );
+
+  TimeCodeConverter timeCodeConverter = TimeCodeConverter();
+
+  Widget listJemput(BuildContext context) {
+    if (penjemputan.isEmpty || usersName.isEmpty) {
+      return SizedBox(
+        height: MediaQuery.of(context).size.height / 3.5,
+        child: const Center(
+          child: Text("Belum ada Penjemputan"),
+        ),
+      );
+    } else {
+      return Container(
+        margin: const EdgeInsets.symmetric(
+          horizontal: 17,
+        ),
+        height: MediaQuery.of(context).size.height -
+            75 -
+            130 * (6 - penjemputan.length),
+        child: ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: penjemputan.length,
+          itemBuilder: (BuildContext context, int index) {
+            return SizedBox(
+              height: 113,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                margin: const EdgeInsets.symmetric(
+                  vertical: 5,
+                ),
+                color: AppColors.jadwalCardBackground,
+                child: ListTile(
+                  contentPadding: const EdgeInsets.only(
+                    left: 10,
+                  ),
+                  visualDensity: const VisualDensity(
+                    horizontal: 0,
+                    vertical: 4,
+                  ),
+                  title: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 15,
+                      bottom: 5,
+                    ),
+                    child: Text(
+                      penjemputan[index]["date"] as String,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  subtitle: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 5,
+                        ),
+                        child: Text(
+                          usersName[index],
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        penjemputan[index]["address"] as String,
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                  leading: SizedBox(
+                    width: 71,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(
+                          iconJadwal,
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.fill,
+                        ),
+                        const Spacer(),
+                        Text(
+                          timeCodeConverter.timeCodeConverter(
+                              penjemputan[index]["time_code"]),
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  trailing: const SizedBox(
+                    width: 55,
+                    child: Icon(
+                      Icons.navigate_next,
+                      size: 60,
+                    ),
+                  ),
+                  dense: true,
+                  horizontalTitleGap: 13,
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) {
+                          return DetailPenjemputanScreen(
+                              penjemputan[index]["id_jemput"]);
+                        },
+                      ),
+                    ),
+                  },
+                ),
+              ),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) => Divider(
+            thickness: 1,
+            height: 10,
+            color: AppColors.backgroundGreen,
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -330,133 +454,62 @@ class _JadwalJemput extends StatelessWidget {
             textAlign: TextAlign.left,
           ),
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 17,
-          ),
-          height: MediaQuery.of(context).size.height -
-              75 -
-              130 * (6 - penjemputan.length),
-          child: ListView.separated(
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: penjemputan.length,
-            itemBuilder: (BuildContext context, int index) {
-              return SizedBox(
-                height: 113,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 5,
-                  ),
-                  color: AppColors.jadwalCardBackground,
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.only(
-                      left: 10,
-                    ),
-                    visualDensity: const VisualDensity(
-                      horizontal: 0,
-                      vertical: 4,
-                    ),
-                    title: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 15,
-                        bottom: 5,
-                      ),
-                      child: Text(
-                        penjemputan[index]["tgl"] as String,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    subtitle: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 5,
-                          ),
-                          child: Text(
-                            penjemputan[index]["nama"] as String,
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          penjemputan[index]["alamat"] as String,
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                    leading: SizedBox(
-                      width: 71,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Image.asset(
-                            iconJadwal,
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.fill,
-                          ),
-                          const Spacer(),
-                          Text(
-                            penjemputan[index]["jam"] as String,
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    trailing: const SizedBox(
-                      width: 55,
-                      child: Icon(
-                        Icons.navigate_next,
-                        size: 60,
-                      ),
-                    ),
-                    dense: true,
-                    horizontalTitleGap: 13,
-                    onTap: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute<void>(
-                          builder: (BuildContext context) {
-                            return const DetailPenjemputanScreen();
-                          },
-                        ),
-                      ),
-                    },
-                  ),
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) => Divider(
-              thickness: 1,
-              height: 10,
-              color: AppColors.backgroundGreen,
-            ),
-          ),
-        ),
+        listJemput(context),
       ],
     );
   }
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var driver_name = "Account";
+  var user_name = "User Name";
+  var jml_koin_driver = 0;
+  var jml_jemput = 0;
+  var jml_berat = 0;
+  List<Map<String, dynamic>> data = [];
+  List usersName = [];
+
+  void setJemput() {
+    var penjemputan = FetchDataJemput().fetchListJemputNotDone(uid);
+    penjemputan.then((value) {
+      setState(() {
+        data = value;
+        List usersID = data.map((map) => map["id_user"]).toList();
+        setUser(usersID);
+      });
+    });
+  }
+
+  void setUser(List userID) {
+    for (var element in userID) {
+      var user = FetchData().fetchMapData("user", element);
+      user.then((value) {
+        setState(() {
+          usersName.add(value["name_user"]);
+        });
+      });
+    }
+  }
+
+  void set() {
+    var driver = FetchData().fetchMapData("driver", uid);
+    driver.then((value) {
+      setState(() {
+        driver_name = value["name_driver"];
+        jml_koin_driver = value["jml_koin_driver"];
+        jml_jemput = value["jml_jemput"];
+        jml_berat = value["jml_berat"];
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    set();
+    setJemput();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -481,9 +534,10 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Column(
                 children: [
-                  _JemputBox(),
+                  _JemputBox(
+                      driver_name, jml_koin_driver, jml_jemput, jml_berat),
                   _Carousel(),
-                  _JadwalJemput(),
+                  _JadwalJemput(data, usersName),
                 ],
               )
             ],
