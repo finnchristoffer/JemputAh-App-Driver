@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:jemputah_app_driver/API/FetchData.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
+import 'package:jemputah_app_driver/constants/variable.dart';
+import 'package:jemputah_app_driver/extensions/date_time_converter.dart';
 import 'package:jemputah_app_driver/screens/home_screen.dart';
 
 void main() => runApp(const TukarScreen());
@@ -12,22 +16,55 @@ class TukarScreen extends StatefulWidget {
 }
 
 int price = 0;
-int point = 1000;
+int point = 0;
 
 class _TukarScreenState extends State<TukarScreen> {
+  var db = FirebaseFirestore.instance;
+  var jml_koin_driver = 0;
+  var dateNow = DateTime.now().toString();
+  DateTimeConverter dateTimeConverter = DateTimeConverter();
+
+  void setDriver() {
+    var user = FetchData().fetchMapData("driver", uid);
+    user.then((value) {
+      setState(() {
+        jml_koin_driver = value["jml_koin_driver"];
+      });
+    });
+  }
+
+  void uploadTransaction(int i) {
+    final DriverTransaction = <String, dynamic>{
+      'id_driver': uid,
+      'tgl_transaksi_driver': dateTimeConverter.formatWithoutDay(dateNow),
+      'koin_tukar': point,
+      'rupiah': price,
+    };
+    db.collection('driver_transaction').add(DriverTransaction);
+  }
+
+  void updatePointDriver(int i) {
+    var updatePoint = jml_koin_driver - i;
+    db.collection('driver').doc(uid).update({'jml_koin_driver': updatePoint});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setDriver();
+  }
+
   @override
   Widget build(BuildContext context) {
     void _calculateMoney(val) {
       setState(() {
         if (val != "") {
-          price = int.parse(val) * 100;
+          point = int.parse(val);
+          price = point * 10;
         } else {
           price = 0;
         }
-
-        // print(price);
       });
-      // print(price);
     }
 
     TextEditingController valuePoint = TextEditingController();
@@ -55,7 +92,7 @@ class _TukarScreenState extends State<TukarScreen> {
               Container(
                 margin: EdgeInsets.only(top: 40, right: 60),
                 child: Text(
-                  point.toString() + "   Koin",
+                  jml_koin_driver.toString() + "   Koin",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -72,17 +109,6 @@ class _TukarScreenState extends State<TukarScreen> {
             ),
             child: Column(
               children: [
-                // Container(
-                //   margin: EdgeInsets.only(top: 40),
-                //   child: Text(
-                //     "Masukan jumlah koin \nyang ingin anda tukar",
-                //     style: TextStyle(
-                //       color: Colors.black,
-                //       fontSize: 20,
-                //     ),
-                //     textAlign: TextAlign.center,
-                //   ),
-                // ),
                 Row(
                   children: [
                     Container(
@@ -99,15 +125,7 @@ class _TukarScreenState extends State<TukarScreen> {
                     Container(
                       margin: EdgeInsets.only(top: 80, right: 55),
                       width: 150,
-                      // child: Text(
-                      //   point.toString(),
-                      //   style: TextStyle(
-                      //       color: Colors.black,
-                      //       fontSize: 20,
-                      //       fontWeight: FontWeight.bold),
-                      // ),
                       child: TextField(
-                        // controller: valuePoint,
                         onChanged: (val) {
                           _calculateMoney(val);
                         },
@@ -159,7 +177,10 @@ class _TukarScreenState extends State<TukarScreen> {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
+              uploadTransaction(price);
+              updatePointDriver(point);
+              price = 0;
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute<void>(
                   builder: (BuildContext context) {
