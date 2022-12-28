@@ -39,7 +39,7 @@ class _TukarScreenState extends State<TukarScreen> {
   void uploadTransaction(int i) {
     final DriverTransaction = <String, dynamic>{
       'id_driver': uid,
-      'tgl_transaksi_user': dateTimeConverter.formatWithoutDay(dateNow),
+      'tgl_transaksi_driver': dateTimeConverter.formatWithoutDay(dateNow),
       'koin_tukar': point,
       'rupiah': price,
     };
@@ -63,7 +63,7 @@ class _TukarScreenState extends State<TukarScreen> {
       setState(() {
         if (val != "") {
           point = int.parse(val);
-          price = point * 100;
+          price = point * 10;
         } else {
           price = 0;
         }
@@ -73,6 +73,7 @@ class _TukarScreenState extends State<TukarScreen> {
     TextEditingController valuePoint = TextEditingController();
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: AppColors.mainGreen,
         title: const Text('Tukar Koin'),
         centerTitle: false,

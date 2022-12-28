@@ -1,35 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:jemputah_app_driver/API/FetchData.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
+import 'package:jemputah_app_driver/constants/images.dart';
+import 'package:jemputah_app_driver/constants/variable.dart';
 
-class Transaksi extends StatelessWidget {
-  const Transaksi({super.key});
+class TransaksiScreen extends StatefulWidget {
+  const TransaksiScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: TransaksiScreen(),
-    );
-  }
+  State<TransaksiScreen> createState() => TransaksiScreenState();
 }
 
-class TransaksiScreen extends StatelessWidget {
-  TransaksiScreen({super.key});
+class TransaksiScreenState extends State<TransaksiScreen> {
+  List<Map<String, dynamic>> data = [];
 
-  final titles = [
-    "Penukaran Koin Berhasil",
-    "Penukaran Koin Berhasil",
-    "Penukaran Koin Berhasil"
-  ];
-  final subtitles = [
-    "2000 Koin | Rp. 20.000",
-    "3000 Koin | Rp. 30.000",
-    "2000 Koin | Rp. 20.000"
-  ];
-  final date = ["23 Sept 2022", "24 Sept 2022", "25 Sept 2022"];
+  void setTransactionDriver() {
+    var trasaction = FetchData().fetchListData("driver_transaction", uid);
+    trasaction.then((value) {
+      setState(() {
+        data = value;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setTransactionDriver();
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (data.isEmpty) {
+      return Scaffold(
+          backgroundColor: AppColors.backgroundGreen,
+          appBar: AppBar(
+            leading: const BackButton(color: Colors.white),
+            backgroundColor: AppColors.mainGreen,
+            title: const Text('Transaksi'),
+          ),
+          body: Center(
+              child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 250, bottom: 50),
+                child: Image.asset(
+                  transaksiKosong,
+                ),
+              ),
+              Text(
+                "Ups, Anda belum melakukan \ntransaksi apapun",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: AppColors.hintTextColor,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          )));
+    }
     return Scaffold(
         backgroundColor: AppColors.backgroundGreen,
         appBar: AppBar(
@@ -38,24 +68,27 @@ class TransaksiScreen extends StatelessWidget {
           title: const Text('Transaksi'),
         ),
         body: ListView.builder(
-            itemCount: titles.length,
+            itemCount: data.length,
             itemBuilder: (context, index) {
               return Card(
                   color: AppColors.backgroundGreen,
                   child: ListTile(
                     //set title with style bold
-                    title: Text(titles[index],
+                    title: Text('Penukaran Koin Berhasil',
                         style: const TextStyle(fontWeight: FontWeight.bold)),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          subtitles[index],
+                          (data[index]['koin_tukar'].toString()) +
+                              ' Koin  |  ' +
+                              'Rp.' +
+                              data[index]['rupiah'].toString(),
                           style: const TextStyle(color: Colors.black),
                         ),
                         Container(
                           margin: const EdgeInsets.only(top: 10),
-                          child: Text(date[index]),
+                          child: Text(data[index]['tgl_transaksi_driver']),
                         )
                       ],
                     ),
