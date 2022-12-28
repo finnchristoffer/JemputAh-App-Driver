@@ -35,6 +35,7 @@ class _TukarScreenState extends State<TukarScreen> {
     TextEditingController valuePoint = TextEditingController();
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: AppColors.mainGreen,
         title: const Text('Tukar Koin'),
         centerTitle: false,
