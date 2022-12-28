@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/screens/home_screen.dart';

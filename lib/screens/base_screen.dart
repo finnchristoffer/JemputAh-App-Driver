@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
 import 'package:jemputah_app_driver/constants/size.dart';
-import 'package:jemputah_app_driver/screens/featured_screen.dart';
 import 'package:jemputah_app_driver/screens/home_screen.dart';
 import 'package:jemputah_app_driver/screens/pesanan_screen.dart';
-import 'package:jemputah_app_driver/screens/tukar_screen.dart';
 import 'package:jemputah_app_driver/screens/profile_screen.dart';
 
 class BaseScreen extends StatefulWidget {

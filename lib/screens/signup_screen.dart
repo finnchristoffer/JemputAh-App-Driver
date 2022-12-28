@@ -149,6 +149,11 @@ class InitState extends State<SignUpScreen> {
                     "name_driver": _nameTextController.text,
                     "phone_num_driver": _phoneNumberTextController.text,
                     "profile_pic_driver": '',
+                    "slot_1": '',
+                    "slot_2": '',
+                    "slot_3": '',
+                    "slot_4": '',
+                    "slot_5": '',
                   });
                   Navigator.pushReplacement(
                       context,

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/API/FetchData.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
+import 'package:jemputah_app_driver/constants/variable.dart';
 import 'package:jemputah_app_driver/extensions/time_code_converter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:jemputah_app_driver/screens/base_screen.dart';
 
 class DetailPenjemputanScreen extends StatefulWidget {
   final String id_jemput;
@@ -14,6 +17,7 @@ class DetailPenjemputanScreen extends StatefulWidget {
 }
 
 class InitState extends State<DetailPenjemputanScreen> {
+  var db = FirebaseFirestore.instance;
   String id_jemput;
 
   InitState(this.id_jemput);
@@ -23,14 +27,24 @@ class InitState extends State<DetailPenjemputanScreen> {
   dynamic _beratSampahKaca = 0.0;
   dynamic _beratSampahKaleng = 0.0;
 
-  dynamic _totalPendapatan = 0;
-  dynamic _totalBerat = 0.0;
+  dynamic _totalPendapatanDriver = 0;
+  dynamic _totalPendapatanUser = 0;
+  double _totalBerat = 0;
 
   String _alamatPenjemputan = 'Loading...';
   String _tanggalPenjemputan = 'Loading...';
   String _waktuPenjemputan = 'Loading...';
   String _namaUser = 'Loading...';
   String _noTelpUser = 'Loading...';
+
+  dynamic _koinUser = 0;
+  dynamic _jemputUser = 0;
+  dynamic _beratUser = 0;
+
+  dynamic _koinDriver = 0;
+  dynamic _jemputDriver = 0;
+  dynamic _beratDriver = 0;
+
   String _idSampah = '';
   String _idUser = '';
 
@@ -40,7 +54,8 @@ class InitState extends State<DetailPenjemputanScreen> {
     var jemput = FetchData().fetchMapData('jemput', id_jemput);
     jemput.then((value) {
       setState(() {
-        _totalPendapatan = value['total_koin_user'];
+        _totalPendapatanDriver = value['total_koin_driver'];
+        _totalPendapatanUser = value['total_koin_user'];
         _totalBerat = value['total_berat'];
         _idSampah = value['id_sampah'];
         _alamatPenjemputan = value['address'];
@@ -50,6 +65,7 @@ class InitState extends State<DetailPenjemputanScreen> {
             timeCodeConverter.timeCodeConverter(value['time_code']);
         setSampah();
         setUser();
+        setDriver();
       });
     });
   }
@@ -72,8 +88,41 @@ class InitState extends State<DetailPenjemputanScreen> {
       setState(() {
         _namaUser = value['name_user'];
         _noTelpUser = value['phone_num_user'];
+        _koinUser = value['jml_koin_user'];
+        _jemputUser = value['jml_jemput'];
+        _beratUser = value['jml_berat'];
       });
     });
+  }
+
+  void setDriver() {
+    var driver = FetchData().fetchMapData('driver', uid);
+    driver.then((value) {
+      setState(() {
+        _koinDriver = value['jml_koin_driver'];
+        _jemputDriver = value['jml_jemput'];
+        _beratDriver = value['jml_berat'];
+      });
+    });
+  }
+
+  void setDone() {
+    final jemput = <String, dynamic>{
+      "done": true,
+    };
+    db.collection('jemput').doc(id_jemput).update(jemput);
+    final updateDriver = <String, dynamic>{
+      "jml_koin_driver": _koinDriver + _totalPendapatanDriver,
+      "jml_jemput": _jemputDriver + 1,
+      "jml_berat": _beratDriver + _totalBerat,
+    };
+    db.collection('driver').doc(uid).update(updateDriver);
+    final updateUser = <String, dynamic>{
+      "jml_koin_user": _koinUser + _totalPendapatanUser,
+      "jml_jemput": _jemputUser + 1,
+      "jml_berat": _beratUser + _totalBerat,
+    };
+    db.collection('user').doc(_idUser).update(updateUser);
   }
 
   @override
@@ -440,14 +489,33 @@ class InitState extends State<DetailPenjemputanScreen> {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 25, right: 24),
-                child: Text(("$_totalPendapatan Koin"),
+                child: Text(("$_totalPendapatanDriver Koin"),
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold)),
               ),
             ],
           ),
           GestureDetector(
-            onTap: () => {},
+            onTap: () => {
+              setDone(),
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const AlertDialog(
+                      title: Text(
+                        "Berhasil",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      content: Text(
+                        "Pesanan sudah diselesaikan.",
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  }),
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const BaseScreen())),
+            },
             child: Container(
               margin: const EdgeInsets.only(
                   left: 24, right: 24, top: 10, bottom: 30),

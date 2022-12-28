@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/screens/base_screen.dart';
 import 'package:jemputah_app_driver/screens/forgot_password_screen.dart';
-import 'package:jemputah_app_driver/screens/home_screen.dart';
 import './signup_screen.dart';
 import 'package:jemputah_app_driver/constants/images.dart';
 import 'package:jemputah_app_driver/reuseable_widget/reuseable_widget.dart';

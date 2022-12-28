@@ -1,10 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
-import 'package:jemputah_app_driver/screens/base_screen.dart';
-import './signup_screen.dart';
-import 'package:jemputah_app_driver/constants/images.dart';
 import 'package:jemputah_app_driver/reuseable_widget/reuseable_widget.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -130,7 +126,7 @@ class InitState extends State<ForgotPasswordScreen> {
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => Center(
+        builder: (context) => const Center(
               child: CircularProgressIndicator(),
             ));
 
