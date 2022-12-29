@@ -3,6 +3,7 @@ import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jemputah_app_driver/screens/login_screen.dart';
 import 'package:jemputah_app_driver/reuseable_widget/reuseable_widget.dart';
+import 'package:jemputah_app_driver/constants/color.dart';
 
 class SettingUI extends StatelessWidget {
   const SettingUI({super.key});
@@ -25,8 +26,10 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class ChangePasswordState extends State<ChangePasswordPage> {
-  final TextEditingController _oldPasswordTextController = TextEditingController();
-  final TextEditingController _newPasswordTextController = TextEditingController();
+  final TextEditingController _oldPasswordTextController =
+      TextEditingController();
+  final TextEditingController _newPasswordTextController =
+      TextEditingController();
   final TextEditingController _newSecondPasswordTextController =
       TextEditingController();
 
@@ -60,13 +63,14 @@ class ChangePasswordState extends State<ChangePasswordPage> {
       showDialog(
           context: context,
           builder: (context) {
-            return const AlertDialog(
-              title: Text(
+            return AlertDialog(
+              title: const Text(
                 "Error",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.black),
               ),
-              content: Text(
+              backgroundColor: AppColors.secondaryBorder,
+              content: const Text(
                 "Password lama tidak sesuai. Tolong cek kembali",
                 textAlign: TextAlign.center,
               ),
@@ -154,13 +158,14 @@ class ChangePasswordState extends State<ChangePasswordPage> {
                     showDialog(
                         context: context,
                         builder: (context) {
-                          return const AlertDialog(
-                            title: Text(
+                          return AlertDialog(
+                            title: const Text(
                               "Error",
                               textAlign: TextAlign.center,
                               style: TextStyle(color: Colors.black),
                             ),
-                            content: Text(
+                            backgroundColor: AppColors.secondaryBorder,
+                            content: const Text(
                               "Password baru dan konfirmasinya masih belum sama. Tolong cek kembali.",
                               textAlign: TextAlign.center,
                             ),
