@@ -1,12 +1,9 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/API/FetchData.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/variable.dart';
 import 'package:jemputah_app_driver/extensions/date_time_converter.dart';
-import 'package:jemputah_app_driver/models/driver.dart';
 import 'package:jemputah_app_driver/screens/home_screen.dart';
 
 void main() => runApp(const TukarScreen());

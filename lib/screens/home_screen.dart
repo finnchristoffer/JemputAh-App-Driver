@@ -64,10 +64,10 @@ class _LeadAppBar extends StatelessWidget {
 }
 
 class _JemputBox extends StatelessWidget {
-  final int berat;
-  final int jmlJemput;
-  final int koin;
-  final String username;
+  dynamic berat;
+  dynamic jmlJemput;
+  dynamic koin;
+  String username;
 
   _JemputBox(
     this.username,
@@ -463,9 +463,9 @@ class _JadwalJemput extends StatelessWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var driver_name = "Account";
   var user_name = "User Name";
-  var jml_koin_driver = 0;
-  var jml_jemput = 0;
-  var jml_berat = 0;
+  dynamic jml_koin_driver = 0;
+  dynamic jml_jemput = 0;
+  dynamic jml_berat = 0;
   List<Map<String, dynamic>> data = [];
   List usersName = [];
 
