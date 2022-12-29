@@ -16,10 +16,10 @@ class SignUpScreen extends StatefulWidget {
 
 class InitState extends State<SignUpScreen> {
   final firestore = FirebaseFirestore.instance;
-  TextEditingController _nameTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _phoneNumberTextController = TextEditingController();
-  TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _nameTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _phoneNumberTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

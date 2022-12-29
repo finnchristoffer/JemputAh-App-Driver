@@ -17,6 +17,7 @@ class Pesanan extends StatefulWidget {
 class PesananPage extends State<Pesanan> {
   List<Map<String, dynamic>> data = [];
 
+  @override
   void initState() {
     super.initState();
     setPesanan();
@@ -79,12 +80,10 @@ class PesananPage extends State<Pesanan> {
                     color: AppColors.backgroundGreen,
                     child: ListTile(
                       //set title with style bold
-                      title: Text('Pesanan Selesai',
-                          style: const TextStyle(fontWeight: FontWeight.bold)),
-                      subtitle: Text(timeCodeConverterHour
-                              .timeCodeConverterHour(data[index]['time_code']) +
-                          " | " +
-                          data[index]['date']),
+                      title: const Text('Pesanan Selesai',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      subtitle: Text(
+                          '${timeCodeConverterHour.timeCodeConverterHour(data[index]['time_code'])} | ${data[index]['date']}'),
                       leading: Image.asset(
                         iconPesananSelesai,
                         width: 50,

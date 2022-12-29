@@ -21,13 +21,13 @@ class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
 
   @override
-  _ChangePasswordState createState() => _ChangePasswordState();
+  ChangePasswordState createState() => ChangePasswordState();
 }
 
-class _ChangePasswordState extends State<ChangePasswordPage> {
-  TextEditingController _oldPasswordTextController = TextEditingController();
-  TextEditingController _newPasswordTextController = TextEditingController();
-  TextEditingController _newSecondPasswordTextController =
+class ChangePasswordState extends State<ChangePasswordPage> {
+  final TextEditingController _oldPasswordTextController = TextEditingController();
+  final TextEditingController _newPasswordTextController = TextEditingController();
+  final TextEditingController _newSecondPasswordTextController =
       TextEditingController();
 
   var newPassword = '';
@@ -54,6 +54,7 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
       const snackBar = SnackBar(
         content: Text('Kata Sandi Berhasil Diubah, Silahkan Masuk Kembali.'),
       );
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } catch (error) {
       showDialog(
@@ -84,7 +85,7 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
         title: const Text('Ubah Sandi'),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 30, right: 30),
+        padding: const EdgeInsets.only(left: 30, right: 30),
         child: ListView(
           children: [
             const SizedBox(
