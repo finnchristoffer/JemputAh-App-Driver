@@ -159,13 +159,14 @@ class EditProfilePageState extends State<EditProfilePage> {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return const AlertDialog(
-                          title: Text(
+                        return AlertDialog(
+                          title: const Text(
                             "Error",
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.black),
                           ),
-                          content: Text(
+                          backgroundColor: AppColors.secondaryBorder,
+                          content: const Text(
                             "Tolong isi kolom yang masih kosong terlebih dahulu.",
                             textAlign: TextAlign.center,
                           ),

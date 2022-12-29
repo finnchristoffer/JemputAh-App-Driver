@@ -18,7 +18,8 @@ class InitState extends State<SignUpScreen> {
   final firestore = FirebaseFirestore.instance;
   final TextEditingController _nameTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
-  final TextEditingController _phoneNumberTextController = TextEditingController();
+  final TextEditingController _phoneNumberTextController =
+      TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
 
   @override
@@ -120,13 +121,14 @@ class InitState extends State<SignUpScreen> {
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return const AlertDialog(
-                        title: Text(
+                      return AlertDialog(
+                        title: const Text(
                           "Error",
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.black),
                         ),
-                        content: Text(
+                        backgroundColor: AppColors.secondaryBorder,
+                        content: const Text(
                           "Tolong isi kolom yang masih kosong terlebih dahulu.",
                           textAlign: TextAlign.center,
                         ),
@@ -169,6 +171,7 @@ class InitState extends State<SignUpScreen> {
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.black),
                           ),
+                          backgroundColor: AppColors.secondaryBorder,
                           content: Text(
                             error.toString(),
                             textAlign: TextAlign.center,

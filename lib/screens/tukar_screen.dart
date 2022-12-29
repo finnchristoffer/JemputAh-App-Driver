@@ -4,7 +4,7 @@ import 'package:jemputah_app_driver/API/FetchData.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/variable.dart';
 import 'package:jemputah_app_driver/extensions/date_time_converter.dart';
-import 'package:jemputah_app_driver/screens/home_screen.dart';
+import 'package:jemputah_app_driver/screens/base_screen.dart';
 
 void main() => runApp(const TukarScreen());
 
@@ -146,7 +146,8 @@ class TukarScreenState extends State<TukarScreen> {
                 Row(
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 25, left: 50, bottom: 65),
+                      margin:
+                          const EdgeInsets.only(top: 25, left: 50, bottom: 65),
                       child: const Text(
                         "Rp.",
                         style: TextStyle(
@@ -157,7 +158,8 @@ class TukarScreenState extends State<TukarScreen> {
                     ),
                     const Spacer(),
                     Container(
-                      margin: const EdgeInsets.only(top: 25, right: 50, bottom: 65),
+                      margin:
+                          const EdgeInsets.only(top: 25, right: 50, bottom: 65),
                       child: Text(
                         '$price',
                         style: const TextStyle(
@@ -183,10 +185,26 @@ class TukarScreenState extends State<TukarScreen> {
                 context,
                 MaterialPageRoute<void>(
                   builder: (BuildContext context) {
-                    return const HomeScreen();
+                    return const BaseScreen();
                   },
                 ),
               );
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text(
+                        "Berhasil",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      backgroundColor: AppColors.secondaryBorder,
+                      content: const Text(
+                        "Koin anda berhasil ditukar.",
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  });
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.buttonBackground,

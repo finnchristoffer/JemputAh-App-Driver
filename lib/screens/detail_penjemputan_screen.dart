@@ -165,13 +165,14 @@ class InitState extends State<DetailPenjemputanScreen> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     _namaUser,
-                    style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 10, right: 24, bottom: 10),
-                  child: Text((_noTelpUser),
-                      style: const TextStyle(fontSize: 18)),
+                  child:
+                      Text((_noTelpUser), style: const TextStyle(fontSize: 18)),
                 ),
               ],
             ),
@@ -498,23 +499,24 @@ class InitState extends State<DetailPenjemputanScreen> {
           GestureDetector(
             onTap: () => {
               setDone(),
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const BaseScreen())),
               showDialog(
                   context: context,
                   builder: (context) {
-                    return const AlertDialog(
-                      title: Text(
+                    return AlertDialog(
+                      title: const Text(
                         "Berhasil",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.black),
                       ),
-                      content: Text(
+                      backgroundColor: AppColors.secondaryBorder,
+                      content: const Text(
                         "Pesanan sudah diselesaikan.",
                         textAlign: TextAlign.center,
                       ),
                     );
                   }),
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const BaseScreen())),
             },
             child: Container(
               margin: const EdgeInsets.only(
