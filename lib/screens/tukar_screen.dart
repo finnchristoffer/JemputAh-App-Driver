@@ -12,15 +12,15 @@ class TukarScreen extends StatefulWidget {
   const TukarScreen({super.key});
 
   @override
-  _TukarScreenState createState() => _TukarScreenState();
+  TukarScreenState createState() => TukarScreenState();
 }
 
 int price = 0;
 int point = 0;
 
-class _TukarScreenState extends State<TukarScreen> {
+class TukarScreenState extends State<TukarScreen> {
   var db = FirebaseFirestore.instance;
-  var jml_koin_driver = 0;
+  var jmlKoinDriver = 0;
   var dateNow = DateTime.now().toString();
   DateTimeConverter dateTimeConverter = DateTimeConverter();
 
@@ -28,23 +28,23 @@ class _TukarScreenState extends State<TukarScreen> {
     var user = FetchData().fetchMapData("driver", uid);
     user.then((value) {
       setState(() {
-        jml_koin_driver = value["jml_koin_driver"];
+        jmlKoinDriver = value["jml_koin_driver"];
       });
     });
   }
 
   void uploadTransaction(int i) {
-    final DriverTransaction = <String, dynamic>{
+    final driverTransaction = <String, dynamic>{
       'id_driver': uid,
       'tgl_transaksi_driver': dateTimeConverter.formatWithoutDay(dateNow),
       'koin_tukar': point,
       'rupiah': price,
     };
-    db.collection('driver_transaction').add(DriverTransaction);
+    db.collection('driver_transaction').add(driverTransaction);
   }
 
   void updatePointDriver(int i) {
-    var updatePoint = jml_koin_driver - i;
+    var updatePoint = jmlKoinDriver - i;
     db.collection('driver').doc(uid).update({'jml_koin_driver': updatePoint});
   }
 
@@ -56,7 +56,7 @@ class _TukarScreenState extends State<TukarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void _calculateMoney(val) {
+    void calculateMoney(val) {
       setState(() {
         if (val != "") {
           point = int.parse(val);
@@ -67,7 +67,6 @@ class _TukarScreenState extends State<TukarScreen> {
       });
     }
 
-    TextEditingController valuePoint = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.mainGreen,
@@ -79,8 +78,8 @@ class _TukarScreenState extends State<TukarScreen> {
           Row(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 40, left: 45),
-                child: Text(
+                margin: const EdgeInsets.only(top: 40, left: 45),
+                child: const Text(
                   "Total Koin",
                   style: TextStyle(
                       color: Colors.black,
@@ -88,12 +87,12 @@ class _TukarScreenState extends State<TukarScreen> {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Container(
-                margin: EdgeInsets.only(top: 40, right: 60),
+                margin: const EdgeInsets.only(top: 40, right: 60),
                 child: Text(
-                  jml_koin_driver.toString() + "   Koin",
-                  style: TextStyle(
+                  "$jmlKoinDriver   Koin",
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
@@ -102,7 +101,7 @@ class _TukarScreenState extends State<TukarScreen> {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(top: 25, left: 30, right: 30),
+            margin: const EdgeInsets.only(top: 25, left: 30, right: 30),
             decoration: BoxDecoration(
               color: AppColors.secondaryBorder,
               borderRadius: BorderRadius.circular(10),
@@ -112,8 +111,8 @@ class _TukarScreenState extends State<TukarScreen> {
                 Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 80, left: 45),
-                      child: Text(
+                      margin: const EdgeInsets.only(top: 80, left: 45),
+                      child: const Text(
                         "Koin",
                         style: TextStyle(
                             color: Colors.black,
@@ -121,15 +120,15 @@ class _TukarScreenState extends State<TukarScreen> {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Container(
-                      margin: EdgeInsets.only(top: 80, right: 55),
+                      margin: const EdgeInsets.only(top: 80, right: 55),
                       width: 150,
                       child: TextField(
                         onChanged: (val) {
-                          _calculateMoney(val);
+                          calculateMoney(val);
                         },
-                        decoration: new InputDecoration.collapsed(
+                        decoration: const InputDecoration.collapsed(
                             hintText: 'Jumlah Koin'),
                         textAlign: TextAlign.right,
                       ),
@@ -137,7 +136,7 @@ class _TukarScreenState extends State<TukarScreen> {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 25),
+                  padding: const EdgeInsets.only(top: 25),
                   child: Container(
                     height: 2.0,
                     width: 290.0,
@@ -147,8 +146,8 @@ class _TukarScreenState extends State<TukarScreen> {
                 Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 25, left: 50, bottom: 65),
-                      child: Text(
+                      margin: const EdgeInsets.only(top: 25, left: 50, bottom: 65),
+                      child: const Text(
                         "Rp.",
                         style: TextStyle(
                             color: Colors.black,
@@ -156,12 +155,12 @@ class _TukarScreenState extends State<TukarScreen> {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Container(
-                      margin: EdgeInsets.only(top: 25, right: 50, bottom: 65),
+                      margin: const EdgeInsets.only(top: 25, right: 50, bottom: 65),
                       child: Text(
                         '$price',
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
                             fontWeight: FontWeight.bold),
@@ -172,7 +171,7 @@ class _TukarScreenState extends State<TukarScreen> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
           ElevatedButton(

@@ -23,14 +23,15 @@ class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
 
   @override
-  _EditProfilePageState createState() => _EditProfilePageState();
+  EditProfilePageState createState() => EditProfilePageState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class EditProfilePageState extends State<EditProfilePage> {
   var db = FirebaseFirestore.instance;
-  TextEditingController _nameTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _phoneNumberTextController = TextEditingController();
+  final TextEditingController _nameTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _phoneNumberTextController =
+      TextEditingController();
 
   void setProfile() {
     var profile = FetchData().fetchMapData('driver', uid);
@@ -59,7 +60,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         title: const Text('Ubah Profil'),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 30, right: 30),
+        padding: const EdgeInsets.only(left: 30, right: 30),
         child: ListView(
           children: [
             const SizedBox(
@@ -79,10 +80,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             spreadRadius: 2,
                             blurRadius: 10,
                             color: Colors.black.withOpacity(0.1),
-                            offset: Offset(0, 10)),
+                            offset: const Offset(0, 10)),
                       ],
                       shape: BoxShape.circle,
-                      image: DecorationImage(
+                      image: const DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage(profilePicture))),
                 ),

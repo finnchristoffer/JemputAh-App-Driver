@@ -32,7 +32,7 @@ class _HistoryTransactionButton extends StatelessWidget {
       onPressed: () {
         Navigator.push(context, MaterialPageRoute<void>(
           builder: (BuildContext context) {
-            return TransaksiScreen();
+            return const TransaksiScreen();
           },
         ));
       },
@@ -64,12 +64,12 @@ class _LeadAppBar extends StatelessWidget {
 }
 
 class _JemputBox extends StatelessWidget {
-  dynamic berat;
-  dynamic jmlJemput;
-  dynamic koin;
-  String username;
+  final dynamic berat;
+  final dynamic jmlJemput;
+  final dynamic koin;
+  final String username;
 
-  _JemputBox(
+  const _JemputBox(
     this.username,
     this.koin,
     this.jmlJemput,
@@ -181,7 +181,7 @@ class _JemputBox extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute<void>(
                       builder: (BuildContext context) {
-                        return TukarScreen();
+                        return const TukarScreen();
                       },
                     ));
                   },
@@ -293,15 +293,15 @@ class CarouselView extends StatelessWidget {
 }
 
 class _JadwalJemput extends StatelessWidget {
-  List<Map<String, dynamic>> penjemputan;
-  List usersName;
+  final List<Map<String, dynamic>> penjemputan;
+  final List usersName;
 
   _JadwalJemput(
     this.penjemputan,
     this.usersName,
   );
 
-  TimeCodeConverter timeCodeConverter = TimeCodeConverter();
+  final TimeCodeConverter timeCodeConverter = TimeCodeConverter();
 
   Widget listJemput(BuildContext context) {
     if (penjemputan.isEmpty || usersName.isEmpty) {
@@ -461,11 +461,10 @@ class _JadwalJemput extends StatelessWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var driver_name = "Account";
-  var user_name = "User Name";
-  dynamic jml_koin_driver = 0;
-  dynamic jml_jemput = 0;
-  dynamic jml_berat = 0;
+  var driverName = "Account";
+  dynamic jmlKoinDriver = 0;
+  dynamic jmlJemput = 0;
+  dynamic jmlBerat = 0;
   List<Map<String, dynamic>> data = [];
   List usersName = [];
 
@@ -495,10 +494,10 @@ class _HomeScreenState extends State<HomeScreen> {
     var driver = FetchData().fetchMapData("driver", uid);
     driver.then((value) {
       setState(() {
-        driver_name = value["name_driver"];
-        jml_koin_driver = value["jml_koin_driver"];
-        jml_jemput = value["jml_jemput"];
-        jml_berat = value["jml_berat"];
+        driverName = value["name_driver"];
+        jmlKoinDriver = value["jml_koin_driver"];
+        jmlJemput = value["jml_jemput"];
+        jmlBerat = value["jml_berat"];
       });
     });
   }
@@ -534,8 +533,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Column(
                 children: [
-                  _JemputBox(
-                      driver_name, jml_koin_driver, jml_jemput, jml_berat),
+                  _JemputBox(driverName, jmlKoinDriver, jmlJemput, jmlBerat),
                   _Carousel(),
                   _JadwalJemput(data, usersName),
                 ],

@@ -8,19 +8,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jemputah_app_driver/screens/base_screen.dart';
 
 class DetailPenjemputanScreen extends StatefulWidget {
-  final String id_jemput;
+  final String idJemput;
 
-  const DetailPenjemputanScreen(this.id_jemput, {super.key});
+  const DetailPenjemputanScreen(this.idJemput, {super.key});
 
   @override
-  State<StatefulWidget> createState() => InitState(id_jemput);
+  State<StatefulWidget> createState() => InitState(idJemput);
 }
 
 class InitState extends State<DetailPenjemputanScreen> {
   var db = FirebaseFirestore.instance;
-  String id_jemput;
+  String idJemput;
 
-  InitState(this.id_jemput);
+  InitState(this.idJemput);
 
   dynamic _beratSampahPlastik = 0.0;
   dynamic _beratSampahKarton = 0.0;
@@ -51,7 +51,7 @@ class InitState extends State<DetailPenjemputanScreen> {
   TimeCodeConverter timeCodeConverter = TimeCodeConverter();
 
   void setJemput() {
-    var jemput = FetchData().fetchMapData('jemput', id_jemput);
+    var jemput = FetchData().fetchMapData('jemput', idJemput);
     jemput.then((value) {
       setState(() {
         _totalPendapatanDriver = value['total_koin_driver'];
@@ -110,7 +110,7 @@ class InitState extends State<DetailPenjemputanScreen> {
     final jemput = <String, dynamic>{
       "done": true,
     };
-    db.collection('jemput').doc(id_jemput).update(jemput);
+    db.collection('jemput').doc(idJemput).update(jemput);
     final updateDriver = <String, dynamic>{
       "jml_koin_driver": _koinDriver + _totalPendapatanDriver,
       "jml_jemput": _jemputDriver + 1,
@@ -164,13 +164,13 @@ class InitState extends State<DetailPenjemputanScreen> {
                   margin: const EdgeInsets.only(top: 10, left: 24, bottom: 10),
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    '$_namaUser',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    _namaUser,
+                    style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 10, right: 24, bottom: 10),
-                  child: Text(("$_noTelpUser"),
+                  child: Text((_noTelpUser),
                       style: const TextStyle(fontSize: 18)),
                 ),
               ],
@@ -396,8 +396,8 @@ class InitState extends State<DetailPenjemputanScreen> {
                 SizedBox(
                     width: 260,
                     child: Text(
-                      '$_alamatPenjemputan',
-                      style: TextStyle(
+                      _alamatPenjemputan,
+                      style: const TextStyle(
                           fontWeight: FontWeight.normal, fontSize: 15),
                     )),
               ])),
@@ -434,7 +434,7 @@ class InitState extends State<DetailPenjemputanScreen> {
                     width: 260,
                     child: Text(
                       _tanggalPenjemputan,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.normal, fontSize: 15),
                     )),
               ])),
@@ -470,8 +470,8 @@ class InitState extends State<DetailPenjemputanScreen> {
                 SizedBox(
                     width: 260,
                     child: Text(
-                      '$_waktuPenjemputan',
-                      style: TextStyle(
+                      _waktuPenjemputan,
+                      style: const TextStyle(
                           fontWeight: FontWeight.normal, fontSize: 15),
                     )),
               ])),

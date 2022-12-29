@@ -74,16 +74,13 @@ class TransaksiScreenState extends State<TransaksiScreen> {
                   color: AppColors.backgroundGreen,
                   child: ListTile(
                     //set title with style bold
-                    title: Text('Penukaran Koin Berhasil',
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                    title: const Text('Penukaran Koin Berhasil',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          (data[index]['koin_tukar'].toString()) +
-                              ' Koin  |  ' +
-                              'Rp.' +
-                              data[index]['rupiah'].toString(),
+                          '${(data[index]['koin_tukar'].toString())} Koin  |  Rp. ${data[index]['rupiah'].toString()}',
                           style: const TextStyle(color: Colors.black),
                         ),
                         Container(

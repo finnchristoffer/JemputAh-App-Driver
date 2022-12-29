@@ -18,10 +18,10 @@ class AddressDetailPage extends StatefulWidget {
   const AddressDetailPage({super.key});
 
   @override
-  _AddressDetailState createState() => _AddressDetailState();
+  AddressDetailState createState() => AddressDetailState();
 }
 
-class _AddressDetailState extends State<AddressDetailPage> {
+class AddressDetailState extends State<AddressDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +59,7 @@ class _AddressDetailState extends State<AddressDetailPage> {
                 cursorColor: AppColors.buttonBackground,
                 decoration: InputDecoration(
                   icon: Padding(
-                    padding: EdgeInsets.only(bottom: 35),
+                    padding: const EdgeInsets.only(bottom: 35),
                     child: Icon(
                       Icons.home,
                       color: AppColors.mainGreen,
