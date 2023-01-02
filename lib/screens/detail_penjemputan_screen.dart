@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/API/FetchData.dart';
+import 'package:jemputah_app_driver/components/dl_alert.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
 import 'package:jemputah_app_driver/constants/variable.dart';
@@ -50,6 +53,8 @@ class InitState extends State<DetailPenjemputanScreen> {
   String _idSampah = '';
   String _idUser = '';
 
+  bool _pickUpDone = false;
+
   TimeCodeConverter timeCodeConverter = TimeCodeConverter();
 
   void setJemput() {
@@ -66,6 +71,7 @@ class InitState extends State<DetailPenjemputanScreen> {
         _timeCode = value['time_code'];
         _waktuPenjemputan =
             timeCodeConverter.timeCodeConverter(value['time_code']);
+        _pickUpDone = value['is_pickup_done'];
         setSampah();
         setUser();
         setDriver();
@@ -111,13 +117,15 @@ class InitState extends State<DetailPenjemputanScreen> {
 
   void setDone() {
     final jemput = <String, dynamic>{
-      "done": true,
+      "is_pickup_done": true,
+      "ongoing": false,
     };
     db.collection('jemput').doc(idJemput).update(jemput);
     final updateDriver = <String, dynamic>{
       "jml_koin_driver": _koinDriver + _totalPendapatanDriver,
       "jml_jemput": _jemputDriver + 1,
       "jml_berat": _beratDriver + _totalBerat,
+      "is_pickup_done": true,
     };
     db.collection('driver').doc(uid).update(updateDriver);
     final updateUser = <String, dynamic>{
@@ -126,6 +134,12 @@ class InitState extends State<DetailPenjemputanScreen> {
       "jml_berat": _beratUser + _totalBerat,
     };
     db.collection('user').doc(_idUser).update(updateUser);
+    db.collection('driver').doc(uid).update({'slot_$_timeCode': ''});
+  }
+
+  void setCancel() {
+    db.collection('jemput').doc(idJemput).update({'is_pickup_done': false});
+    db.collection('jemput').doc(idJemput).update({'ongoing': false});
     db.collection('driver').doc(uid).update({'slot_$_timeCode': ''});
   }
 
@@ -507,7 +521,22 @@ class InitState extends State<DetailPenjemputanScreen> {
               children: [
                 GestureDetector(
                   onTap: () => {
-                    //buat cancel pesanan nanti ditaro disini
+                    DLAlert(
+                      cancelTitle: 'Batalkan',
+                      alertTitle: 'Konfirmasi Pembatalan',
+                      alertDetailMessage:
+                          'Apakah Anda yakin ingin membatalkan pesanan ini?',
+                      alertActionTitles: ['Konfirmasi'],
+                      onAlertAction: (index) {
+                        if (index == 0) {
+                          setCancel();
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const BaseScreen()));
+                        }
+                      },
+                    ).show(context),
                   },
                   child: Container(
                     margin: const EdgeInsets.only(top: 10, bottom: 30),
@@ -532,27 +561,22 @@ class InitState extends State<DetailPenjemputanScreen> {
                 ),
                 GestureDetector(
                   onTap: () => {
-                    setDone(),
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const BaseScreen())),
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text(
-                              "Berhasil",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            backgroundColor: AppColors.secondaryBorder,
-                            content: const Text(
-                              "Pesanan sudah diselesaikan.",
-                              textAlign: TextAlign.center,
-                            ),
-                          );
-                        }),
+                    DLAlert(
+                      cancelTitle: 'Batalkan',
+                      alertTitle: 'Konfirmasi Penjemputan',
+                      alertDetailMessage:
+                          'Apakah Anda yakin ingin menyelesaikan pesanan ini?',
+                      alertActionTitles: ['Konfirmasi'],
+                      onAlertAction: (index) {
+                        if (index == 0) {
+                          setDone();
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const BaseScreen()));
+                        }
+                      },
+                    ).show(context),
                   },
                   child: Container(
                     margin: const EdgeInsets.only(top: 10, bottom: 30),
