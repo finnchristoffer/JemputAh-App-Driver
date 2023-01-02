@@ -45,6 +45,8 @@ class InitState extends State<DetailPenjemputanScreen> {
   dynamic _jemputDriver = 0;
   dynamic _beratDriver = 0;
 
+  int _timeCode = 0;
+
   String _idSampah = '';
   String _idUser = '';
 
@@ -61,6 +63,7 @@ class InitState extends State<DetailPenjemputanScreen> {
         _alamatPenjemputan = value['address'];
         _tanggalPenjemputan = value['date'];
         _idUser = value['id_user'];
+        _timeCode = value['time_code'];
         _waktuPenjemputan =
             timeCodeConverter.timeCodeConverter(value['time_code']);
         setSampah();
@@ -123,6 +126,7 @@ class InitState extends State<DetailPenjemputanScreen> {
       "jml_berat": _beratUser + _totalBerat,
     };
     db.collection('user').doc(_idUser).update(updateUser);
+    db.collection('driver').doc(uid).update({'slot_$_timeCode': ''});
   }
 
   @override
@@ -496,49 +500,84 @@ class InitState extends State<DetailPenjemputanScreen> {
               ),
             ],
           ),
-          GestureDetector(
-            onTap: () => {
-              setDone(),
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const BaseScreen())),
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text(
-                        "Berhasil",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      backgroundColor: AppColors.secondaryBorder,
-                      content: const Text(
-                        "Pesanan sudah diselesaikan.",
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  }),
-            },
-            child: Container(
-              margin: const EdgeInsets.only(
-                  left: 24, right: 24, top: 10, bottom: 30),
-              alignment: Alignment.center,
-              height: 42,
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(62, 75, 42, 1),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(
-                      offset: Offset(0, 10),
-                      blurRadius: 50,
-                      color: Color(0xffEEEEEE)),
-                ],
-              ),
-              child: const Text(
-                'Pesanan Selesai',
-                style: TextStyle(color: Colors.white),
-              ),
+          Container(
+            margin: const EdgeInsets.only(left: 24, right: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () => {
+                    //buat cancel pesanan nanti ditaro disini
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 10, bottom: 30),
+                    width: 170,
+                    alignment: Alignment.center,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      color: AppColors.red,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: const [
+                        BoxShadow(
+                            offset: Offset(0, 10),
+                            blurRadius: 50,
+                            color: Color(0xffEEEEEE)),
+                      ],
+                    ),
+                    child: const Text(
+                      'Batalkan Pesanan',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => {
+                    setDone(),
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const BaseScreen())),
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text(
+                              "Berhasil",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            backgroundColor: AppColors.secondaryBorder,
+                            content: const Text(
+                              "Pesanan sudah diselesaikan.",
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        }),
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 10, bottom: 30),
+                    width: 170,
+                    alignment: Alignment.center,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(62, 75, 42, 1),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: const [
+                        BoxShadow(
+                            offset: Offset(0, 10),
+                            blurRadius: 50,
+                            color: Color(0xffEEEEEE)),
+                      ],
+                    ),
+                    child: const Text(
+                      'Pesanan Selesai',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
+          )
         ]),
       ),
     );
