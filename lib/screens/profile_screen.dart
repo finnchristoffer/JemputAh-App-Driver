@@ -76,9 +76,12 @@ class _ProfileCard extends StatelessWidget {
         onTap: isLogOut
             ? () {
                 FirebaseAuth.instance.signOut().then((value) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const LoginScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
                 });
+                setVariable('');
               }
             : () => Navigator.push(
                   context,
