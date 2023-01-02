@@ -12,8 +12,9 @@ class Jemput {
       "total_koin_driver": snapshot["total_koin_driver"],
       "total_koin_user": snapshot["total_koin_user"],
       "date": snapshot["date"],
-      "done": snapshot["done"],
+      "ongoing": snapshot["ongoing"],
       "address": snapshot['address'],
+      "is_pickup_done": snapshot['is_pickup_done'],
     };
     return data;
   }
