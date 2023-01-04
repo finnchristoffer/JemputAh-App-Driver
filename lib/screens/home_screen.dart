@@ -380,7 +380,7 @@ class _JadwalJemput extends StatelessWidget {
                     ],
                   ),
                   leading: SizedBox(
-                    width: 71,
+                    width: 85,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -388,8 +388,8 @@ class _JadwalJemput extends StatelessWidget {
                       children: [
                         Image.asset(
                           iconJadwal,
-                          width: 50,
-                          height: 50,
+                          width: 45,
+                          height: 45,
                           fit: BoxFit.fill,
                         ),
                         const Spacer(),
@@ -405,14 +405,14 @@ class _JadwalJemput extends StatelessWidget {
                     ),
                   ),
                   trailing: const SizedBox(
-                    width: 55,
+                    width: 50,
                     child: Icon(
                       Icons.navigate_next,
                       size: 60,
                     ),
                   ),
                   dense: true,
-                  horizontalTitleGap: 13,
+                  horizontalTitleGap: 12,
                   onTap: () => {
                     Navigator.push(
                       context,
