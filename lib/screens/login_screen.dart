@@ -6,6 +6,8 @@ import './signup_screen.dart';
 import 'package:jemputah_app_driver/constants/images.dart';
 import 'package:jemputah_app_driver/reuseable_widget/reuseable_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:jemputah_app_driver/constants/variable.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -102,6 +104,35 @@ class InitState extends State<LoginScreen> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const BaseScreen()));
+                setVariable(FirebaseAuth.instance.currentUser?.uid);
+                FirebaseFirestore.instance
+                    .collection('user')
+                    .doc(uid)
+                    .get()
+                    .then((doc) {
+                  if (!doc.exists) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()));
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: AppColors.secondaryBorder,
+                            title: const Text(
+                              "Error",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            content: const Text(
+                              "Sepertinya akun Anda tidak terdaftar pada aplikasi User, silahkan coba login pada aplikasi Driver.",
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        });
+                  }
+                });
               }).onError((error, stackTrace) {
                 showDialog(
                     context: context,
@@ -121,7 +152,7 @@ class InitState extends State<LoginScreen> {
                     });
               });
             }),
-            signUpOption()
+            signUpOption(),
           ],
         ),
       ),
