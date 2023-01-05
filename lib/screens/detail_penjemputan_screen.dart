@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/API/FetchData.dart';
 import 'package:jemputah_app_driver/components/dl_alert.dart';
@@ -16,6 +14,7 @@ class DetailPenjemputanScreen extends StatefulWidget {
   const DetailPenjemputanScreen(this.idJemput, {super.key});
 
   @override
+  // ignore: no_logic_in_create_state
   State<StatefulWidget> createState() => InitState(idJemput);
 }
 
@@ -53,8 +52,6 @@ class InitState extends State<DetailPenjemputanScreen> {
   String _idSampah = '';
   String _idUser = '';
 
-  bool _pickUpDone = false;
-
   TimeCodeConverter timeCodeConverter = TimeCodeConverter();
 
   void setJemput() {
@@ -71,7 +68,6 @@ class InitState extends State<DetailPenjemputanScreen> {
         _timeCode = value['time_code'];
         _waktuPenjemputan =
             timeCodeConverter.timeCodeConverter(value['time_code']);
-        _pickUpDone = value['is_pickup_done'];
         setSampah();
         setUser();
         setDriver();

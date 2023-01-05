@@ -3,7 +3,6 @@ import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jemputah_app_driver/screens/login_screen.dart';
 import 'package:jemputah_app_driver/reuseable_widget/reuseable_widget.dart';
-import 'package:jemputah_app_driver/constants/color.dart';
 
 class SettingUI extends StatelessWidget {
   const SettingUI({super.key});
