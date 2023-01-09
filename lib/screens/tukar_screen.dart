@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:jemputah_app_driver/API/FetchData.dart';
+import 'package:jemputah_app_driver/components/dl_alert.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/variable.dart';
 import 'package:jemputah_app_driver/extensions/date_time_converter.dart';
@@ -46,6 +47,63 @@ class TukarScreenState extends State<TukarScreen> {
   void updatePointDriver(int i) {
     var updatePoint = jmlKoinDriver - i;
     db.collection('driver').doc(uid).update({'jml_koin_driver': updatePoint});
+  }
+
+  void validationCoin(int i) {
+    if (jmlKoinDriver < point) {
+      const snackBar = SnackBar(
+        content: Text('Koin anda tidak mencukupi'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      uploadTransaction(price);
+      updatePointDriver(point);
+      price = 0;
+      showUp();
+    }
+  }
+
+  void alert() {
+    final alertTitles = ["Konfirmasi"];
+    final alertDetailPesanan =
+        "Apakah anda yakin ingin melakukan penukaran dengan koin sejumlah " +
+            point.toString() +
+            "?";
+    DLAlert(
+        cancelTitle: 'Batalkan',
+        alertTitle: 'Konfirmasi Penukaran',
+        alertDetailMessage: alertDetailPesanan,
+        alertActionTitles: alertTitles,
+        onAlertAction: (int selectedActionIndex) {
+          validationCoin(point);
+        }).show(context);
+  }
+
+  void showUp() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          return const BaseScreen();
+        },
+      ),
+    );
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text(
+              "Berhasil",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.black),
+            ),
+            backgroundColor: AppColors.secondaryBorder,
+            content: const Text(
+              "Koin anda berhasil ditukar.",
+              textAlign: TextAlign.center,
+            ),
+          );
+        });
   }
 
   @override
@@ -178,33 +236,7 @@ class TukarScreenState extends State<TukarScreen> {
           ),
           ElevatedButton(
             onPressed: () {
-              uploadTransaction(price);
-              updatePointDriver(point);
-              price = 0;
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) {
-                    return const BaseScreen();
-                  },
-                ),
-              );
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text(
-                        "Berhasil",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      backgroundColor: AppColors.secondaryBorder,
-                      content: const Text(
-                        "Koin anda berhasil ditukar.",
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  });
+              alert();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.buttonBackground,
