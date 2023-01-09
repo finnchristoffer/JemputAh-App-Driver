@@ -412,7 +412,7 @@ class _JadwalJemput extends StatelessWidget {
                     ),
                   ),
                   dense: true,
-                  horizontalTitleGap: 12,
+                  horizontalTitleGap: 7,
                   onTap: () => {
                     Navigator.push(
                       context,
