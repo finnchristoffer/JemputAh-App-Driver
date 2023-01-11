@@ -106,7 +106,7 @@ class InitState extends State<LoginScreen> {
                         builder: (context) => const BaseScreen()));
                 setVariable(FirebaseAuth.instance.currentUser?.uid);
                 FirebaseFirestore.instance
-                    .collection('user')
+                    .collection('driver')
                     .doc(uid)
                     .get()
                     .then((doc) {
@@ -126,7 +126,7 @@ class InitState extends State<LoginScreen> {
                               style: TextStyle(color: Colors.black),
                             ),
                             content: const Text(
-                              "Sepertinya akun Anda tidak terdaftar pada aplikasi User, silahkan coba login pada aplikasi Driver.",
+                              "Sepertinya akun Anda tidak terdaftar pada aplikasi Driver, silahkan coba login pada aplikasi User.",
                               textAlign: TextAlign.center,
                             ),
                           );
