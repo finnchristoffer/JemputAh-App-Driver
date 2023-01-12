@@ -152,7 +152,7 @@ class InitState extends State<DetailPenjemputanScreen> {
 
   Widget initWidget() {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(245, 246, 233, 1),
+      backgroundColor: AppColors.backgroundGreen,
       appBar: AppBar(
         leading: const BackButton(color: Colors.white),
         backgroundColor: AppColors.mainGreen,
@@ -205,7 +205,7 @@ class InitState extends State<DetailPenjemputanScreen> {
               padding: const EdgeInsets.only(left: 10, right: 0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromRGBO(178, 186, 159, 1),
+                color: AppColors.secondaryBorder,
                 boxShadow: const [
                   BoxShadow(
                       offset: Offset(0, 10),
@@ -245,7 +245,7 @@ class InitState extends State<DetailPenjemputanScreen> {
               padding: const EdgeInsets.only(left: 10, right: 0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromRGBO(178, 186, 159, 1),
+                color: AppColors.secondaryBorder,
                 boxShadow: const [
                   BoxShadow(
                       offset: Offset(0, 10),
@@ -285,7 +285,7 @@ class InitState extends State<DetailPenjemputanScreen> {
               padding: const EdgeInsets.only(left: 10, right: 0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromRGBO(178, 186, 159, 1),
+                color: AppColors.secondaryBorder,
                 boxShadow: const [
                   BoxShadow(
                       offset: Offset(0, 10),
@@ -325,7 +325,7 @@ class InitState extends State<DetailPenjemputanScreen> {
               padding: const EdgeInsets.only(left: 10, right: 0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromRGBO(178, 186, 159, 1),
+                color: AppColors.secondaryBorder,
                 boxShadow: const [
                   BoxShadow(
                       offset: Offset(0, 10),
@@ -393,7 +393,7 @@ class InitState extends State<DetailPenjemputanScreen> {
               padding: const EdgeInsets.only(left: 10, right: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromRGBO(178, 186, 159, 1),
+                color: AppColors.secondaryBorder,
                 boxShadow: const [
                   BoxShadow(
                       offset: Offset(0, 10),
@@ -430,7 +430,7 @@ class InitState extends State<DetailPenjemputanScreen> {
               padding: const EdgeInsets.only(left: 10, right: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromRGBO(178, 186, 159, 1),
+                color: AppColors.secondaryBorder,
                 boxShadow: const [
                   BoxShadow(
                       offset: Offset(0, 10),
@@ -467,7 +467,7 @@ class InitState extends State<DetailPenjemputanScreen> {
               padding: const EdgeInsets.only(left: 10, right: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromRGBO(178, 186, 159, 1),
+                color: AppColors.secondaryBorder,
                 boxShadow: const [
                   BoxShadow(
                       offset: Offset(0, 10),
@@ -580,7 +580,7 @@ class InitState extends State<DetailPenjemputanScreen> {
                     alignment: Alignment.center,
                     height: 42,
                     decoration: BoxDecoration(
-                      color: const Color.fromRGBO(62, 75, 42, 1),
+                      color: AppColors.buttonBackground,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: const [
                         BoxShadow(

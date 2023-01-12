@@ -81,7 +81,7 @@ class ChangePasswordState extends State<ChangePasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(245, 246, 233, 1),
+      backgroundColor: AppColors.backgroundGreen,
       appBar: AppBar(
         leading: const BackButton(color: Colors.white),
         backgroundColor: AppColors.mainGreen,
@@ -144,12 +144,46 @@ class ChangePasswordState extends State<ChangePasswordPage> {
                     Icons.vpn_key, true, _newSecondPasswordTextController)),
             GestureDetector(
               onTap: () => {
-                if (_newPasswordTextController.text ==
-                    _newSecondPasswordTextController.text)
+                if (_oldPasswordTextController.text.isEmpty ||
+                    _newPasswordTextController.text.isEmpty ||
+                    _newSecondPasswordTextController.text.isEmpty)
                   {
-                    changePassword(
-                        oldPassword: _oldPasswordTextController.text,
-                        newPassword: _newPasswordTextController.text)
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: AppColors.secondaryBorder,
+                            title: const Text(
+                              "Error",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            content: const Text(
+                              "Tolong isi kolom yang masih kosong terlebih dahulu.",
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        })
+                  }
+                else if (_oldPasswordTextController.text ==
+                    _newPasswordTextController.text)
+                  {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: AppColors.secondaryBorder,
+                            title: const Text(
+                              "Error",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            content: const Text(
+                              "Password lama dan password baru yang Anda masukkan sama.",
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        })
                   }
                 else if (_newPasswordTextController.text !=
                     _newSecondPasswordTextController.text)
@@ -158,12 +192,12 @@ class ChangePasswordState extends State<ChangePasswordPage> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
+                            backgroundColor: AppColors.secondaryBorder,
                             title: const Text(
                               "Error",
                               textAlign: TextAlign.center,
                               style: TextStyle(color: Colors.black),
                             ),
-                            backgroundColor: AppColors.secondaryBorder,
                             content: const Text(
                               "Password baru dan konfirmasinya masih belum sama. Tolong cek kembali.",
                               textAlign: TextAlign.center,
@@ -171,13 +205,20 @@ class ChangePasswordState extends State<ChangePasswordPage> {
                           );
                         })
                   }
+                else if (_newPasswordTextController.text ==
+                    _newSecondPasswordTextController.text)
+                  {
+                    changePassword(
+                        oldPassword: _oldPasswordTextController.text,
+                        newPassword: _newPasswordTextController.text)
+                  }
               },
               child: Container(
                 margin: const EdgeInsets.only(top: 300),
                 alignment: Alignment.center,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: const Color.fromRGBO(62, 75, 42, 1),
+                  color: AppColors.buttonBackground,
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: const [
                     BoxShadow(
