@@ -53,7 +53,7 @@ class EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(245, 246, 233, 1),
+      backgroundColor: AppColors.backgroundGreen,
       appBar: AppBar(
         leading: const BackButton(color: Colors.white),
         backgroundColor: AppColors.mainGreen,
@@ -187,7 +187,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                 alignment: Alignment.center,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: const Color.fromRGBO(62, 75, 42, 1),
+                  color: AppColors.buttonBackground,
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: const [
                     BoxShadow(

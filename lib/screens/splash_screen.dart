@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:flutter/material.dart';
 import './login_screen.dart';
 
@@ -37,8 +37,8 @@ class InitState extends State<SplashScreen> {
       body: Stack(
         children: [
           Container(
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(245, 246, 233, 1),
+            decoration: BoxDecoration(
+              color: AppColors.backgroundGreen,
             ),
           ),
           Center(
