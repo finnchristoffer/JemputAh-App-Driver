@@ -2,9 +2,9 @@
     package="com.example.jemputah_app_driver">
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
    <application
-        android:label="jemputah_app_driver"
+        android:label="JemputAh Driver"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/logo_kecil">
         <activity
             android:name=".MainActivity"
             android:exported="true"
