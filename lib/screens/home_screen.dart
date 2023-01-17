@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:jemputah_app_driver/API/FetchData.dart';
 import 'package:jemputah_app_driver/API/FetchDataJemput.dart';
+import 'package:jemputah_app_driver/API/FetchTotalBerat.dart';
 import 'package:jemputah_app_driver/constants/color.dart';
 import 'package:jemputah_app_driver/constants/icons.dart';
 import 'package:jemputah_app_driver/constants/images.dart';
@@ -65,14 +66,14 @@ class _LeadAppBar extends StatelessWidget {
 
 class _JemputBox extends StatelessWidget {
   final dynamic berat;
-  final dynamic jmlJemput;
+  final dynamic totalBerat;
   final dynamic koin;
   final String username;
 
   const _JemputBox(
     this.username,
     this.koin,
-    this.jmlJemput,
+    this.totalBerat,
     this.berat,
   );
 
@@ -160,7 +161,7 @@ class _JemputBox extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 13),
                         child: Text(
-                          "$jmlJemput Jemput",
+                          "$berat Kg",
                         ),
                       ),
                       const VerticalDivider(
@@ -169,7 +170,7 @@ class _JemputBox extends StatelessWidget {
                         color: Colors.black,
                       ),
                       Text(
-                        "$berat Kg",
+                        "$totalBerat Kg",
                       ),
                     ],
                   )),
@@ -463,10 +464,28 @@ class _JadwalJemput extends StatelessWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var driverName = "Account";
   dynamic jmlKoinDriver = 0;
-  dynamic jmlJemput = 0;
+  dynamic totalBerat = 0.0;
   dynamic jmlBerat = 0;
   List<Map<String, dynamic>> data = [];
   List usersName = [];
+
+  void setTotalBerat() {
+    int index = 0;
+    int i = 0;
+    var berat = FetchDataBerat().fetchListBerat();
+    berat.then((value) {
+      setState(() {
+        if (value.isEmpty) {
+          totalBerat = 0;
+        } else {
+          index = value.length;
+          for (i; i < index; i++) {
+            totalBerat += value[i]["total_berat"];
+          }
+        }
+      });
+    });
+  }
 
   void setJemput() {
     var penjemputan = FetchDataJemput().fetchListJemputNotDone(uid);
@@ -496,7 +515,6 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         driverName = value["name_driver"];
         jmlKoinDriver = value["jml_koin_driver"];
-        jmlJemput = value["jml_jemput"];
         jmlBerat = value["jml_berat"];
       });
     });
@@ -507,6 +525,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     set();
     setJemput();
+    setTotalBerat();
   }
 
   @override
@@ -533,7 +552,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Column(
                 children: [
-                  _JemputBox(driverName, jmlKoinDriver, jmlJemput, jmlBerat),
+                  _JemputBox(driverName, jmlKoinDriver, totalBerat, jmlBerat),
                   _Carousel(),
                   _JadwalJemput(data, usersName),
                 ],
