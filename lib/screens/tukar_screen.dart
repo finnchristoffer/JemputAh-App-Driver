@@ -126,6 +126,7 @@ class TukarScreenState extends State<TukarScreen> {
     }
 
     return Scaffold(
+      backgroundColor: AppColors.backgroundGreen,
       appBar: AppBar(
         backgroundColor: AppColors.mainGreen,
         title: const Text('Tukar Koin'),
